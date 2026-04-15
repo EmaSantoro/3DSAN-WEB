@@ -1,150 +1,53 @@
-# 3DSAN — Sitio Web Profesional de Impresiones 3D
+# 3DSAN — Plataforma Profesional de Impresiones 3D
 
-Plataforma web para el negocio de impresión 3D **3DSAN**. Funciona como portafolio, vidriera digital y canal de contacto. No es un e-commerce.
+**3DSAN** es una plataforma web moderna diseñada para actuar como portafolio, vidriera digital y canal de contacto para el negocio de fabricación aditiva. El sitio prioriza la experiencia visual y la interactividad para exhibir servicios y trabajos personalizados sin las complejidades de un e-commerce tradicional.
 
 ---
 
-## Stack tecnológico
+## 🚀 Características Principales
+
+* **Portafolio Interactivo:** Visualización detallada de trabajos realizados y servicios ofrecidos.
+* **Visor 3D:** Integración de modelos tridimensionales mediante **Three.js** para una experiencia inmersiva.
+* **Interfaz Fluida:** Navegación optimizada y animaciones dinámicas con **Framer Motion**.
+* **Panel de Administración:** Gestión de contenidos (servicios, trabajos y FAQs) protegida mediante autenticación segura.
+* **Diseño Responsive:** Adaptabilidad total para dispositivos móviles y escritorio.
+
+---
+
+## 🛠️ Stack Tecnológico
 
 | Capa | Tecnología |
-|------|-----------|
-| Backend | Java 17 + Spring Boot 3.3 |
-| Seguridad | Spring Security + JWT |
-| Persistencia | JPA/Hibernate + MySQL |
-| Frontend | React + Vite (SPA) |
-| Animaciones | Framer Motion |
-| Visor 3D | Three.js |
+| :--- | :--- |
+| **Backend** | Java 17 + Spring Boot 3.3 |
+| **Seguridad** | Spring Security + JWT |
+| **Persistencia** | JPA / Hibernate + MySQL |
+| **Frontend** | React + Vite (SPA) |
+| **Animaciones** | Framer Motion |
+| **Gráficos 3D** | Three.js |
 
 ---
 
-## Estructura del proyecto
+## 🏗️ Estructura del Proyecto
 
-```
-mi-primera-app/
-├── backend/          # Spring Boot REST API
-│   └── src/main/java/com/tresdsam/
-│       ├── controller/
-│       ├── service/
-│       ├── repository/
-│       ├── model/
-│       ├── dto/
-│       ├── security/
-│       └── config/
-└── frontend/         # React SPA
-    └── src/
-        ├── components/
-        ├── pages/
-        └── services/
-```
+El sistema utiliza una arquitectura desacoplada para facilitar el mantenimiento y la escalabilidad:
+
+* **`/backend`**: API REST robusta que gestiona la lógica de negocio y la persistencia de datos.
+* **`/frontend`**: Aplicación Single Page (SPA) que consume los servicios de la API de forma eficiente.
 
 ---
 
-## Requisitos previos
+## 🔧 Configuración e Instalación
 
-- Java 17+
-- Maven 3.8+
-- Node.js 18+
-- MySQL corriendo en `localhost:3315`
-  - Usuario: `root`
-  - Contraseña: *(vacía)*
+### Requisitos Previos
+* Java JDK 17 o superior.
+* Node.js (versión LTS recomendada).
+* Gestor de base de datos MySQL.
 
----
-
-## Inicialización
-
-### 1. Base de datos
-
-La base de datos `tresdsam` se crea automáticamente al levantar el backend (`createDatabaseIfNotExist=true`). No es necesario crear nada manualmente.
-
-Al iniciar por primera vez, se cargan datos de ejemplo automáticamente:
-- Usuario administrador (`admin` / `admin123`)
-- 4 servicios (Jarras, Llaveros, Piezas Funcionales, Productos Essen)
-- 12 trabajos de ejemplo
-- 8 preguntas frecuentes
-
-### 2. Backend
-
-```bash
-cd backend
-mvn spring-boot:run
-```
-
-La API queda disponible en `http://localhost:8090`.
-
-### 3. Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-El sitio queda disponible en `http://localhost:5173`.
+### Pasos Generales
+1.  **Base de Datos:** Configurar el esquema en MySQL y actualizar las propiedades de conexión en el backend.
+2.  **Servidor:** Compilar y ejecutar el módulo backend utilizando Maven (`mvn spring-boot:run`).
+3.  **Cliente:** Instalar dependencias mediante `npm install` y lanzar el entorno de desarrollo con `npm run dev`.
 
 ---
 
-## Imágenes
 
-Las imágenes del sitio deben colocarse en `frontend/public/images/`:
-
-| Archivo | Uso |
-|---------|-----|
-| `logo.png` | Logo de 3DSAN (se aplica filtro blanco automático) |
-| `bambulab.jpg` | Foto de las impresoras en la sección Fabricación |
-| `personalizados.jpg` | Imagen en la sección de productos personalizados |
-
-Las imágenes de portada de cada servicio se cargan desde el panel de administración o directamente en la base de datos (campo `imagen_portada` en la tabla `servicios`).
-
----
-
-## Endpoints principales
-
-### Públicos
-
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| GET | `/servicios` | Lista todos los servicios |
-| GET | `/servicios/{slug}` | Detalle de un servicio |
-| GET | `/trabajos` | Lista trabajos (filtrables por `?categoria=`) |
-| GET | `/trabajos/{id}` | Detalle de un trabajo |
-| GET | `/preguntas` | Lista de preguntas frecuentes |
-| POST | `/contacto` | Envío de formulario de contacto |
-| POST | `/auth/login` | Login de administrador |
-
-### Protegidos (requieren JWT)
-
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| POST | `/trabajos` | Crear trabajo |
-| PUT | `/trabajos/{id}` | Editar trabajo |
-| DELETE | `/trabajos/{id}` | Eliminar trabajo |
-
----
-
-## Páginas del sitio
-
-| Ruta | Descripción |
-|------|-------------|
-| `/` | Home: Hero, Intro, Servicios, Fabricación, Personalizados, Por qué elegirnos, Contacto |
-| `/servicios/:slug` | Detalle de un servicio con sus trabajos |
-| `/faq` | Preguntas frecuentes (accordion animado) |
-
----
-
-## Credenciales por defecto
-
-```
-Usuario: admin
-Contraseña: admin123
-```
-
-> Cambiar en producción modificando `DataInitializer.java` o directamente en la base de datos.
-
----
-
-## Contacto del negocio
-
-- Instagram: [@3d.san](https://www.instagram.com/3d.san)
-- Email: impresiones3dsan@gmail.com
-
-Desarrollado por [Emanuel Santoro](https://www.linkedin.com/in/emanuel-santoro-063615164/)
