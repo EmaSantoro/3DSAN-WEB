@@ -23,17 +23,17 @@ export default function Contacto() {
     width: '100%',
     background: 'transparent',
     border: 'none',
-    borderBottom: '1px solid #333',
-    color: '#fff',
+    borderBottom: '1px solid var(--border)',
+    color: 'var(--text)',
     padding: '0.75rem 0',
     fontSize: '1rem',
     outline: 'none',
-    transition: 'border-color 0.2s',
+    transition: 'border-color 0.3s',
     boxSizing: 'border-box',
   };
 
   return (
-    <section id="contacto" style={{ padding: '8rem 2rem', background: '#050505' }}>
+    <section id="contacto" style={{ padding: '8rem 2rem', background: 'linear-gradient(180deg, var(--bg-6) 0%, var(--bg-7) 100%)' }}>
       <div style={{ maxWidth: '700px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -41,7 +41,7 @@ export default function Contacto() {
           viewport={{ once: true }}
           style={{ marginBottom: '3rem' }}
         >
-          <p style={{ color: '#555', letterSpacing: '0.3em', fontSize: '0.75rem', marginBottom: '0.75rem' }}>
+          <p style={{ color: 'var(--blue-light)', letterSpacing: '0.3em', fontSize: '0.75rem', marginBottom: '0.75rem' }}>
             HABLEMOS
           </p>
           <h2 style={{ color: '#fff', fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 800, margin: 0 }}>
@@ -57,7 +57,7 @@ export default function Contacto() {
           style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
         >
           <div>
-            <label style={{ color: '#444', fontSize: '0.75rem', letterSpacing: '0.1em' }}>NOMBRE</label>
+            <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>NOMBRE</label>
             <input
               name="nombre"
               value={form.nombre}
@@ -67,7 +67,7 @@ export default function Contacto() {
             />
           </div>
           <div>
-            <label style={{ color: '#444', fontSize: '0.75rem', letterSpacing: '0.1em' }}>EMAIL</label>
+            <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>EMAIL</label>
             <input
               name="email"
               type="email"
@@ -78,7 +78,7 @@ export default function Contacto() {
             />
           </div>
           <div>
-            <label style={{ color: '#444', fontSize: '0.75rem', letterSpacing: '0.1em' }}>MENSAJE</label>
+            <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>MENSAJE</label>
             <textarea
               name="mensaje"
               value={form.mensaje}
@@ -98,12 +98,12 @@ export default function Contacto() {
 
           <motion.button
             type="submit"
-            whileHover={{ scale: 1.02, backgroundColor: '#fff', color: '#000' }}
+            whileHover={{ background: 'var(--blue)', borderColor: 'var(--blue)', boxShadow: '0 0 30px var(--blue-glow2)' }}
             style={{
               background: 'transparent',
-              border: '1px solid #444',
-              color: '#fff',
-              padding: '1rem 2rem',
+              border: '1px solid var(--border-bright)',
+              color: 'var(--text)',
+              padding: '1rem 2.5rem',
               fontSize: '0.85rem',
               letterSpacing: '0.15em',
               cursor: 'pointer',

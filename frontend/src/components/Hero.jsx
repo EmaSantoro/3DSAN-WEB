@@ -3,73 +3,100 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 export default function Hero() {
-  const canvasRef = useRef(null);
+  const mountRef = useRef(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const mount = mountRef.current;
+    if (!mount) return;
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    const w = mount.clientWidth;
+    const h = mount.clientHeight;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(w, h);
+    mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-    camera.position.set(0, 0, 5);
+    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+    camera.position.set(0, 0, 6);
 
-    // Resize handler
-    const resize = () => {
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    // Floating geometric shape
-    const geo = new THREE.IcosahedronGeometry(1.4, 1);
-    const mat = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      wireframe: true,
-      emissive: 0x333333,
+    // ── Geometría principal: icosaedro facetado ──
+    const geo = new THREE.IcosahedronGeometry(1.8, 0);
+    const mat = new THREE.MeshPhongMaterial({
+      color: 0x111111,
+      emissive: 0x111111,
+      specular: 0xffffff,
+      shininess: 80,
+      wireframe: false,
+      flatShading: true,
     });
     const mesh = new THREE.Mesh(geo, mat);
     scene.add(mesh);
 
-    // Lights
-    const amb = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(amb);
-    const dir = new THREE.DirectionalLight(0xffffff, 1);
-    dir.position.set(5, 5, 5);
-    scene.add(dir);
+    // Wireframe encima
+    const wireMat = new THREE.MeshBasicMaterial({ color: 0x333333, wireframe: true });
+    const wire = new THREE.Mesh(geo, wireMat);
+    scene.add(wire);
 
-    // Mouse parallax
-    let mouseX = 0, mouseY = 0;
+    // ── Luces ──
+    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+    const light1 = new THREE.PointLight(0xffffff, 2, 20);
+    light1.position.set(4, 4, 4);
+    scene.add(light1);
+    const light2 = new THREE.PointLight(0x8888ff, 1, 20);
+    light2.position.set(-4, -2, 2);
+    scene.add(light2);
+
+    // ── Mouse: la pieza sigue suavemente al cursor ──
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+
     const onMouse = (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+      targetX = (e.clientX / window.innerWidth - 0.5) * 3;
+      targetY = -(e.clientY / window.innerHeight - 0.5) * 3;
     };
     window.addEventListener('mousemove', onMouse);
 
+    // ── Resize ──
+    const onResize = () => {
+      const nw = mount.clientWidth;
+      const nh = mount.clientHeight;
+      renderer.setSize(nw, nh);
+      camera.aspect = nw / nh;
+      camera.updateProjectionMatrix();
+    };
+    window.addEventListener('resize', onResize);
+
+    // ── Animación ──
     let raf;
     const animate = () => {
       raf = requestAnimationFrame(animate);
-      mesh.rotation.y += 0.004;
+
+      // Lerp suave hacia la posición del mouse
+      currentX += (targetX - currentX) * 0.05;
+      currentY += (targetY - currentY) * 0.05;
+
+      mesh.position.x = currentX * 0.4;
+      mesh.position.y = currentY * 0.4;
+      wire.position.copy(mesh.position);
+
+      mesh.rotation.y += 0.005;
       mesh.rotation.x += 0.002;
-      mesh.rotation.y += mouseX * 0.002;
-      mesh.rotation.x += mouseY * 0.002;
+      wire.rotation.copy(mesh.rotation);
+
       renderer.render(scene, camera);
     };
     animate();
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMouse);
+      window.removeEventListener('resize', onResize);
+      mount.removeChild(renderer.domElement);
       renderer.dispose();
     };
   }, []);
-
-  const words = ['Precisión.', 'Creatividad.', 'Forma.'];
 
   return (
     <section
@@ -83,104 +110,72 @@ export default function Hero() {
         background: '#000',
       }}
     >
-      {/* Three.js canvas de fondo */}
-      <canvas
-        ref={canvasRef}
+      {/* Canvas Three.js ocupa todo el fondo */}
+      <div
+        ref={mountRef}
+        style={{ position: 'absolute', inset: 0, zIndex: 1 }}
+      />
+
+      {/* Overlay gradiente para legibilidad del texto */}
+      <div
         style={{
           position: 'absolute',
           inset: 0,
-          width: '100%',
-          height: '100%',
-          opacity: 0.4,
+          zIndex: 2,
+          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%)',
         }}
       />
 
-      {/* Contenido */}
-      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 2rem' }}>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ color: '#666', letterSpacing: '0.3em', fontSize: '0.8rem', marginBottom: '1.5rem' }}
-        >
-          IMPRESIONES 3D PROFESIONALES
-        </motion.p>
-
+      {/* Nombre de la empresa — centro */}
+      <div style={{ position: 'relative', zIndex: 3, textAlign: 'center', userSelect: 'none' }}>
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
           style={{
-            fontSize: 'clamp(3rem, 8vw, 7rem)',
+            fontSize: 'clamp(5rem, 16vw, 14rem)',
             fontWeight: 900,
             color: '#fff',
             lineHeight: 1,
-            marginBottom: '0.5rem',
+            letterSpacing: '-0.02em',
+            textShadow: '0 0 80px rgba(255,255,255,0.08)',
           }}
         >
-          3D<span style={{ color: '#444' }}>.san</span>
+          3DSAN
         </motion.h1>
 
-        <div style={{ overflow: 'hidden', marginBottom: '2.5rem' }}>
-          {words.map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 + i * 0.15 }}
-              style={{
-                display: 'inline-block',
-                fontSize: 'clamp(1.2rem, 3vw, 2rem)',
-                color: '#555',
-                marginRight: '1rem',
-              }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </div>
-
-        <motion.a
-          href="#trabajos"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          whileHover={{ scale: 1.05, backgroundColor: '#fff', color: '#000' }}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
           style={{
-            display: 'inline-block',
-            border: '1px solid #444',
-            color: '#fff',
-            padding: '0.85rem 2.5rem',
-            textDecoration: 'none',
-            fontSize: '0.85rem',
-            letterSpacing: '0.15em',
-            transition: 'all 0.3s',
+            color: '#555',
+            fontSize: 'clamp(0.75rem, 1.5vw, 1rem)',
+            letterSpacing: '0.4em',
+            marginTop: '1rem',
           }}
         >
-          VER TRABAJOS
-        </motion.a>
+          IMPRESIONES 3D PROFESIONALES
+        </motion.p>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Indicador de scroll */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1.4 }}
         style={{
           position: 'absolute',
-          bottom: '2rem',
+          bottom: '2.5rem',
           left: '50%',
           transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '0.5rem',
+          zIndex: 3,
         }}
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          style={{ width: '1px', height: '40px', background: 'linear-gradient(to bottom, #fff, transparent)' }}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+          style={{ width: '1px', height: '50px', background: 'linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)', margin: '0 auto' }}
         />
       </motion.div>
     </section>

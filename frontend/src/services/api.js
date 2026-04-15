@@ -12,6 +12,10 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Servicios
+export const getServicios = () => api.get('/servicios');
+export const getServicioBySlug = (slug) => api.get(`/servicios/${slug}`);
+
 // Trabajos
 export const getTrabajosPublicos = () => api.get('/trabajos');
 export const getTrabajosByCategoria = (cat) => api.get(`/trabajos?categoria=${cat}`);
@@ -36,6 +40,9 @@ export const uploadModelo = (file) => {
 // Auth
 export const login = (username, password) =>
   api.post('/auth/login', { username, password });
+
+// Preguntas frecuentes
+export const getPreguntas = () => api.get('/preguntas');
 
 // Contacto
 export const enviarContacto = (data) => api.post('/contacto', data);

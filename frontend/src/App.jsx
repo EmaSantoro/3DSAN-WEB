@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Admin from './pages/Admin';
+import FAQ from './pages/FAQ';
+import ServicioDetalle from './pages/ServicioDetalle';
 import TrabajoDetalle from './pages/TrabajoDetalle';
 
 export default function App() {
@@ -12,8 +12,8 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/servicios/:slug" element={<ServicioDetalle />} />
         <Route path="/trabajos/:id" element={<TrabajoDetalle />} />
       </Routes>
       <Footer />
