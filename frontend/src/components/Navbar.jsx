@@ -38,6 +38,13 @@ export default function Navbar() {
     transition: 'color 0.2s',
   };
 
+    const handleLogoClick = (e) => {
+        if (location.pathname === '/') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
   return (
     <>
       <motion.nav
@@ -59,19 +66,23 @@ export default function Navbar() {
           transition: 'background 0.4s, border 0.4s',
         }}
       >
-        {/* Logo */}
-        <Link to="/" style={{ textDecoration: 'none', zIndex: 101 }}>
-          <motion.img
-            src="/images/3DSANlogoblanco.png"
-            alt="3DSAN"
-            whileHover={{ scale: 1.05 }}
-            style={{
-              height: '36px',
-              width: 'auto',
-              display: 'block',
-            }}
-          />
-        </Link>
+          {/* Logo con ruta al landing inicio y scroll top */}
+          <Link
+              to="/"
+              onClick={handleLogoClick}
+              style={{ textDecoration: 'none', zIndex: 101 }}
+          >
+              <motion.img
+                  src="/images/3DSANlogoblanco.png"
+                  alt="3DSAN"
+                  whileHover={{ scale: 1.05 }}
+                  style={{
+                      height: '36px',
+                      width: 'auto',
+                      display: 'block',
+                  }}
+              />
+          </Link>
 
         {/* Links desktop */}
         <div className="nav-desktop-links" style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>

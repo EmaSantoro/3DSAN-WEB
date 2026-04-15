@@ -9,7 +9,7 @@ const RAZONES = [
   {
     num: '02',
     titulo: 'Entrega rápida',
-    desc: 'Producción express en 48hs para pedidos estándar. Envíos a todo el país con seguimiento en tiempo real.',
+    desc: 'Producción express para pedidos estándar. Envíos a todo el país con seguimiento en tiempo real.',
   },
   {
     num: '03',

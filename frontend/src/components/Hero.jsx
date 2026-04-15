@@ -155,7 +155,7 @@ export default function Hero() {
             marginTop: '1rem',
           }}
         >
-          IMPRESIONES 3D PROFESIONALES
+          IMPRESION Y DISEÑO 3D
         </motion.p>
       </div>
 

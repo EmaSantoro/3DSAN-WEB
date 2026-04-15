@@ -42,7 +42,7 @@ export default function SeccionFabricacion() {
           </p>
 
           <p style={{ color: 'var(--text-3)', lineHeight: 1.85, fontSize: '0.93rem', marginBottom: '2.5rem' }}>
-            Contamos con sistema multifilamento AMS integrado y cámara de temperatura controlada, garantizando consistencia en cada impresión.
+            Contamos con sistema multifilamento AMS integrado y ambiente con temperatura controlada, garantizando consistencia en cada impresión.
           </p>
 
           {/* Specs */}
@@ -104,9 +104,6 @@ export default function SeccionFabricacion() {
             {/* Overlay azul sutil */}
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(59,130,246,0.08) 0%, transparent 60%)', pointerEvents: 'none' }} />
           </motion.div>
-          <p style={{ color: 'var(--text-3)', fontSize: '0.7rem', marginTop: '0.75rem', letterSpacing: '0.05em' }}>
-            Agregá tu foto → <code style={{ color: 'var(--border-bright)' }}>public/images/bambulab.jpg</code>
-          </p>
         </motion.div>
       </div>
     </section>
