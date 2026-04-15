@@ -6,7 +6,7 @@ export default function SeccionPersonalizados() {
 
   return (
     <section
-      style={{ padding: '8rem 2rem', background: 'linear-gradient(160deg, var(--bg-4) 0%, var(--bg-3) 100%)', overflow: 'hidden' }}
+      style={{ padding: '6rem 2rem', background: 'transparent', overflow: 'hidden' }}
     >
       <div
         style={{

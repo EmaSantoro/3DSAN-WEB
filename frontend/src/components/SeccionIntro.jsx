@@ -23,8 +23,8 @@ export default function SeccionIntro() {
   return (
     <section
       style={{
-        padding: '9rem 2rem',
-        background: 'linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%)',
+        padding: '6rem 2rem',
+        background: 'transparent',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -33,20 +33,6 @@ export default function SeccionIntro() {
         overflow: 'hidden',
       }}
     >
-      {/* Orbe de fondo animado */}
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.06, 0.12, 0.06] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        style={{
-          position: 'absolute',
-          width: '600px', height: '600px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, var(--blue) 0%, transparent 70%)',
-          top: '50%', left: '50%',
-          transform: 'translate(-50%,-50%)',
-          pointerEvents: 'none',
-        }}
-      />
 
       <div style={{ maxWidth: '860px', textAlign: 'center', position: 'relative', zIndex: 1 }}>
         <motion.p
@@ -117,7 +103,15 @@ export default function SeccionIntro() {
                 WebkitTextFillColor: 'transparent',
               }}>
                 {stat.special
-                  ? '🌎'
+                  ? (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+                      style={{ width: '2rem', height: '2rem', display: 'inline-block', verticalAlign: 'middle', stroke: 'var(--blue-xlight)' }}>
+                      <rect x="1" y="3" width="15" height="13" rx="1" />
+                      <path d="M16 8h4l3 4v4h-7V8z" />
+                      <circle cx="5.5" cy="18.5" r="2.5" />
+                      <circle cx="18.5" cy="18.5" r="2.5" />
+                    </svg>
+                  )
                   : <Counter to={stat.to} prefix={stat.prefix} suffix={stat.suffix} />
                 }
               </div>

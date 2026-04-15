@@ -3,19 +3,24 @@ import { motion } from 'framer-motion';
 import { enviarContacto } from '../services/api';
 
 export default function Contacto() {
-  const [form, setForm] = useState({ nombre: '', email: '', mensaje: '' });
+  const [form, setForm] = useState({ nombre: '', email: '', telefono: '', mensaje: '' });
   const [estado, setEstado] = useState(null); // 'ok' | 'error' | null
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setEstado(null);
     try {
       await enviarContacto(form);
       setEstado('ok');
-      setForm({ nombre: '', email: '', mensaje: '' });
+      setForm({ nombre: '', email: '', telefono: '', mensaje: '' });
     } catch {
       setEstado('error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,7 +38,7 @@ export default function Contacto() {
   };
 
   return (
-    <section id="contacto" style={{ padding: '8rem 2rem', background: 'linear-gradient(180deg, var(--bg-6) 0%, var(--bg-7) 100%)' }}>
+    <section id="contacto" style={{ padding: '6rem 2rem', background: 'transparent' }}>
       <div style={{ maxWidth: '700px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,19 +68,34 @@ export default function Contacto() {
               value={form.nombre}
               onChange={handleChange}
               required
+              disabled={loading}
               style={inputStyle}
             />
           </div>
-          <div>
-            <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>EMAIL</label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-              style={inputStyle}
-            />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            <div>
+              <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>EMAIL</label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                disabled={loading}
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>TELÉFONO <span style={{ opacity: 0.5 }}>(opcional)</span></label>
+              <input
+                name="telefono"
+                type="tel"
+                value={form.telefono}
+                onChange={handleChange}
+                disabled={loading}
+                style={inputStyle}
+              />
+            </div>
           </div>
           <div>
             <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>MENSAJE</label>
@@ -84,34 +104,72 @@ export default function Contacto() {
               value={form.mensaje}
               onChange={handleChange}
               required
+              disabled={loading}
               rows={4}
               style={{ ...inputStyle, resize: 'none', fontFamily: 'inherit' }}
             />
           </div>
 
           {estado === 'ok' && (
-            <p style={{ color: '#5a5', fontSize: '0.9rem' }}>Mensaje enviado correctamente.</p>
+            <motion.p
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ color: '#4ade80', fontSize: '0.9rem' }}
+            >
+              Mensaje enviado correctamente. Te respondemos a la brevedad.
+            </motion.p>
           )}
           {estado === 'error' && (
-            <p style={{ color: '#a55', fontSize: '0.9rem' }}>Error al enviar. Intentá de nuevo.</p>
+            <motion.p
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ color: '#f87171', fontSize: '0.9rem' }}
+            >
+              Error al enviar. Intentá de nuevo o escribinos a impresiones3dsan@gmail.com
+            </motion.p>
           )}
 
           <motion.button
             type="submit"
-            whileHover={{ background: 'var(--blue)', borderColor: 'var(--blue)', boxShadow: '0 0 30px var(--blue-glow2)' }}
+            disabled={loading}
+            whileHover={!loading ? { background: 'var(--blue)', borderColor: 'var(--blue)', boxShadow: '0 0 30px var(--blue-glow2)' } : {}}
             style={{
               background: 'transparent',
               border: '1px solid var(--border-bright)',
-              color: 'var(--text)',
+              color: loading ? 'var(--text-3)' : 'var(--text)',
               padding: '1rem 2.5rem',
               fontSize: '0.85rem',
               letterSpacing: '0.15em',
-              cursor: 'pointer',
+              cursor: loading ? 'not-allowed' : 'pointer',
               alignSelf: 'flex-start',
               transition: 'all 0.3s',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              minWidth: '180px',
+              justifyContent: 'center',
             }}
           >
-            ENVIAR MENSAJE
+            {loading ? (
+              <>
+                <motion.span
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  style={{
+                    display: 'block',
+                    width: '14px',
+                    height: '14px',
+                    border: '2px solid var(--border-bright)',
+                    borderTopColor: 'var(--text)',
+                    borderRadius: '50%',
+                    flexShrink: 0,
+                  }}
+                />
+                ENVIANDO...
+              </>
+            ) : (
+              'ENVIAR MENSAJE'
+            )}
           </motion.button>
         </motion.form>
       </div>

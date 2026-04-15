@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getPreguntas } from '../services/api';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 function AccordionItem({ pregunta, respuesta, index, isOpen, onToggle }) {
   return (
@@ -90,6 +91,7 @@ function AccordionItem({ pregunta, respuesta, index, isOpen, onToggle }) {
 }
 
 export default function FAQ() {
+  useDocumentTitle('Preguntas Frecuentes');
   const [preguntas, setPreguntas] = useState([]);
   const [openIndex, setOpenIndex] = useState(null);
   const [loading, setLoading] = useState(true);

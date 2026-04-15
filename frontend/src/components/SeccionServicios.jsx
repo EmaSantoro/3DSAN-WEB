@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { getServicios } from '../services/api';
 
@@ -13,7 +13,7 @@ export default function SeccionServicios() {
   }, []);
 
   return (
-    <section id="servicios" style={{ padding: '8rem 2rem', background: 'linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%)', position: 'relative' }}>
+    <section id="servicios" style={{ padding: '6rem 2rem', background: 'transparent', position: 'relative' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         <motion.div
@@ -51,6 +51,7 @@ export default function SeccionServicios() {
 function ServicioCard({ servicio, index }) {
   const [hovered, setHovered] = useState(false);
   const hasImg = !!servicio.imagenPortada;
+  const num = String(index + 1).padStart(2, '0');
 
   return (
     <motion.div
@@ -60,7 +61,7 @@ function ServicioCard({ servicio, index }) {
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -8, boxShadow: '0 24px 60px rgba(59,130,246,0.18)' }}
+      whileHover={{ y: -8, boxShadow: '0 24px 60px rgba(0,0,0,0.5)' }}
       style={{
         background: 'var(--bg-4)',
         border: '1px solid var(--border)',
@@ -71,9 +72,25 @@ function ServicioCard({ servicio, index }) {
         position: 'relative',
         cursor: 'pointer',
         transition: 'border-color 0.3s',
-        borderColor: hovered ? 'var(--blue-dark)' : 'var(--border)',
+        borderColor: hovered ? 'var(--border-bright)' : 'var(--border)',
       }}
     >
+      {/* Número de orden */}
+      <div style={{
+        position: 'absolute',
+        top: '1rem',
+        left: '1rem',
+        zIndex: 2,
+        color: 'rgba(255,255,255,0.2)',
+        fontSize: '0.68rem',
+        fontWeight: 800,
+        letterSpacing: '0.08em',
+        lineHeight: 1,
+        fontVariantNumeric: 'tabular-nums',
+      }}>
+        {num}
+      </div>
+
       {/* Imagen de portada */}
       <div style={{ aspectRatio: '16/9', position: 'relative', overflow: 'hidden', background: 'var(--bg-3)' }}>
         {hasImg ? (
@@ -85,7 +102,6 @@ function ServicioCard({ servicio, index }) {
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         ) : (
-          /* Placeholder azul animado cuando no hay imagen */
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, var(--bg-3), var(--bg-5))' }}>
             <motion.div
               animate={{ rotate: hovered ? 180 : 0, scale: hovered ? 1.2 : 1 }}
@@ -96,7 +112,6 @@ function ServicioCard({ servicio, index }) {
         )}
         {/* Overlay gradiente */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--bg-4) 0%, transparent 60%)', pointerEvents: 'none' }} />
-        {/* Badge de "Agregar imagen" si no hay */}
         {!hasImg && (
           <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', background: 'var(--border)', padding: '0.2rem 0.5rem', fontSize: '0.6rem', letterSpacing: '0.1em', color: 'var(--text-3)' }}>
             SIN IMAGEN
@@ -125,7 +140,7 @@ function ServicioCard({ servicio, index }) {
         </Link>
       </div>
 
-      {/* Línea azul inferior animada en hover */}
+      {/* Línea inferior animada en hover */}
       <motion.div
         animate={{ scaleX: hovered ? 1 : 0 }}
         transition={{ duration: 0.35 }}

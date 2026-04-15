@@ -12,17 +12,8 @@ export default function SeccionFabricacion() {
   return (
     <section
       id="fabricacion"
-      style={{ padding: '8rem 2rem', background: 'linear-gradient(160deg, var(--bg-3) 0%, var(--bg-2) 100%)', position: 'relative', overflow: 'hidden' }}
+      style={{ padding: '6rem 2rem', background: 'transparent', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Línea decorativa azul */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        style={{ height: '1px', background: 'linear-gradient(90deg, transparent, var(--blue), transparent)', marginBottom: '5rem', transformOrigin: 'left' }}
-      />
-
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '5rem', alignItems: 'center' }}>
 
         {/* Texto */}

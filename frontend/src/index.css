@@ -1,11 +1,11 @@
 :root {
-  --bg-1:  #080808;
-  --bg-2:  #0d0d0d;
-  --bg-3:  #111111;
-  --bg-4:  #0a0a0a;
-  --bg-5:  #151515;
-  --bg-6:  #0f0f0f;
-  --bg-7:  #090909;
+  --bg-1:  #050505;
+  --bg-2:  #0c0c0c;
+  --bg-3:  #181818;
+  --bg-4:  #070707;
+  --bg-5:  #202020;
+  --bg-6:  #111111;
+  --bg-7:  #050505;
 
   --blue:       #3b82f6;
   --blue-dark:  #1d4ed8;
@@ -27,7 +27,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg-1);
+  background: #111111;
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -36,9 +36,20 @@ body {
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg-1); }
-::-webkit-scrollbar-thumb { background: var(--blue-dark); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
 
 ::selection { background: var(--blue); color: #fff; }
+
+/* ── Custom cursor (solo mouse, no touch) ── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+/* ── Navbar mobile ── */
+@media (max-width: 768px) {
+  .nav-desktop-links { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+}
 
 /* ── Grid 3×2 PorQueElegirnos ── */
 .por-que-grid {

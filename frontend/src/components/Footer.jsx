@@ -5,7 +5,7 @@ export default function Footer() {
     <footer
       style={{
         borderTop: '1px solid var(--border)',
-        background: 'var(--bg-4)',
+        background: '#0d0d0d',
         padding: '4rem 2rem 2.5rem',
       }}
     >
@@ -22,15 +22,14 @@ export default function Footer() {
         {/* Logo + descripción */}
         <div>
           <img
-            src="/images/logo.png"
+            src="/images/3DSANlogoblanco.png"
             alt="3DSAN"
             style={{
               height: '36px',
               width: 'auto',
               marginBottom: '1rem',
               display: 'block',
-              filter: 'brightness(0) invert(1)',
-              opacity: 0.75,
+              opacity: 0.85,
             }}
           />
           <p style={{ color: 'var(--text-2)', fontSize: '0.82rem', lineHeight: 1.65 }}>

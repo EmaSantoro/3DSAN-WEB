@@ -35,7 +35,7 @@ const RAZONES = [
 
 export default function SeccionPorQueElegirnos() {
   return (
-    <section style={{ padding: '8rem 2rem', background: 'linear-gradient(180deg, var(--bg-5) 0%, var(--bg-6) 100%)' }}>
+    <section style={{ padding: '6rem 2rem', background: 'transparent' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
