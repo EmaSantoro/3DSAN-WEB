@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8090';
+
 const api = axios.create({
-  baseURL: 'http://localhost:8090',
+  baseURL: API_BASE,
+  timeout: 10000,
 });
 
 // Servicios

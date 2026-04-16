@@ -9,6 +9,8 @@ import Galeria from '../components/Galeria';
 import SeccionPorQueElegirnos from '../components/SeccionPorQueElegirnos';
 import Contacto from '../components/Contacto';
 
+const Divider = () => <div className="section-divider" />;
+
 export default function Home() {
   useDocumentTitle(null);
   return (
@@ -16,12 +18,19 @@ export default function Home() {
       <Hero />
       <div style={{ height: '80px', background: 'linear-gradient(180deg, #000 0%, #111111 100%)', pointerEvents: 'none' }} />
       <SeccionIntro />
+      <Divider />
       <SeccionServicios />
+      <Divider />
       <SeccionPersonalizados />
+      <Divider />
       <SeccionFabricacion />
+      <Divider />
       <Destacados />
+      <Divider />
       <Galeria />
+      <Divider />
       <SeccionPorQueElegirnos />
+      <Divider />
       <Contacto />
     </>
   );

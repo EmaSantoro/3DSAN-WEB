@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { getServicios } from '../services/api';
 
-const BASE = 'http://localhost:8090';
+
 
 export default function SeccionServicios() {
   const [servicios, setServicios] = useState([]);

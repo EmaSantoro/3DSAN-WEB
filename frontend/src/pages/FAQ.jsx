@@ -29,17 +29,29 @@ function AccordionItem({ pregunta, respuesta, index, isOpen, onToggle }) {
           textAlign: 'left',
         }}
       >
-        <span
-          style={{
-            color: isOpen ? 'var(--text)' : 'var(--text)',
-            fontSize: '0.97rem',
-            fontWeight: 600,
-            lineHeight: 1.4,
-            transition: 'color 0.3s',
-          }}
-        >
-          {pregunta}
-        </span>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', flex: 1 }}>
+          <span style={{
+            color: 'var(--border-bright)',
+            fontSize: '0.68rem',
+            fontWeight: 800,
+            letterSpacing: '0.08em',
+            fontVariantNumeric: 'tabular-nums',
+            flexShrink: 0,
+          }}>
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span
+            style={{
+              color: isOpen ? '#fff' : 'var(--text-2)',
+              fontSize: '0.97rem',
+              fontWeight: 600,
+              lineHeight: 1.4,
+              transition: 'color 0.3s',
+            }}
+          >
+            {pregunta}
+          </span>
+        </div>
         <motion.span
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.3 }}
@@ -168,7 +180,7 @@ export default function FAQ() {
       </section>
 
       {/* Accordion */}
-      <section style={{ padding: '5rem 2rem 8rem' }}>
+      <section style={{ padding: '5rem 2rem 6rem' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           {loading ? (
             <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
@@ -208,7 +220,7 @@ export default function FAQ() {
       {/* CTA */}
       <section
         style={{
-          padding: '5rem 2rem',
+          padding: '6rem 2rem',
           background: 'var(--bg-2)',
           borderTop: '1px solid var(--border)',
           textAlign: 'center',
@@ -219,15 +231,17 @@ export default function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <p style={{ color: 'var(--text-2)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-            ¿No encontraste lo que buscabas?
+          <p style={{ color: 'var(--blue-light)', letterSpacing: '0.3em', fontSize: '0.72rem', marginBottom: '1rem' }}>
+            ¿NO ENCONTRASTE LO QUE BUSCABAS?
           </p>
+          <h3 style={{ color: '#fff', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, marginBottom: '2rem' }}>
+            Escribinos directamente
+          </h3>
           <motion.a
             href="/#contacto"
             whileHover={{
               background: 'var(--blue)',
               borderColor: 'var(--blue)',
-              color: '#fff',
               boxShadow: '0 0 30px var(--blue-glow2)',
             }}
             style={{

@@ -1,12 +1,12 @@
 package com.tresdsam.service;
 
 import com.tresdsam.dto.TrabajoDTO;
+import com.tresdsam.exception.ResourceNotFoundException;
 import com.tresdsam.model.Trabajo;
 import com.tresdsam.repository.TrabajoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TrabajoService {
@@ -20,25 +20,25 @@ public class TrabajoService {
     public List<TrabajoDTO> getAll() {
         return trabajoRepository.findAll().stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public TrabajoDTO getById(Long id) {
         return trabajoRepository.findById(id)
                 .map(this::toDTO)
-                .orElseThrow(() -> new RuntimeException("Trabajo no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Trabajo no encontrado con id: " + id));
     }
 
     public List<TrabajoDTO> getDestacados() {
         return trabajoRepository.findByDestacadoTrue().stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<TrabajoDTO> getByCategoria(String categoria) {
         return trabajoRepository.findByCategoria(categoria).stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private TrabajoDTO toDTO(Trabajo t) {

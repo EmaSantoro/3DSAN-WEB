@@ -1,2 +1,6 @@
 CLAUDE.md
 /backend/src/main/java/resource/application.properties
+# Env files
+.env
+frontend/.env
+querys.sql

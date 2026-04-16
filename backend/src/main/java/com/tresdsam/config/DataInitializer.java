@@ -6,6 +6,7 @@ import com.tresdsam.model.Trabajo;
 import com.tresdsam.repository.PreguntaRepository;
 import com.tresdsam.repository.ServicioRepository;
 import com.tresdsam.repository.TrabajoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Configuration
 public class DataInitializer {
 
@@ -56,7 +58,7 @@ public class DataInitializer {
                         "/productos/essen.png", 4);
 
                 servicioRepository.saveAll(List.of(s1, s2, s3, s4));
-                System.out.println("==> Servicios mock creados");
+                log.info("Servicios mock creados");
 
                 // ── Trabajos mock ──────────────────────────────────────────
                 List<Trabajo> trabajos = List.of(
@@ -94,7 +96,7 @@ public class DataInitializer {
                 );
 
                 trabajoRepository.saveAll(trabajos);
-                System.out.println("==> " + trabajos.size() + " trabajos mock creados");
+                log.info("{} trabajos mock creados", trabajos.size());
             }
 
             // ── Preguntas Frecuentes ───────────────────────────────────────
@@ -118,7 +120,7 @@ public class DataInitializer {
                         "Sí, contamos con una amplia gama de colores en filamento. Si buscás un color específico para tu marca o proyecto, consultanos y buscamos la opción más cercana.", 8)
                 );
                 preguntaRepository.saveAll(faqs);
-                System.out.println("==> " + faqs.size() + " preguntas frecuentes creadas");
+                log.info("{} preguntas frecuentes creadas", faqs.size());
             }
         };
     }

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const BASE_URL = 'http://localhost:8090';
+import { API_BASE } from '../services/api';
+const BASE_URL = API_BASE;
 
 export default function TrabajoCard({ trabajo, index = 0 }) {
     const imagen = trabajo.imagenes?.[0]

@@ -1,26 +1,37 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getTrabajoById } from '../services/api';
+import { getTrabajoById, API_BASE } from '../services/api';
 import Viewer3D from '../components/Viewer3D';
 
-const BASE_URL = 'http://localhost:8090';
+const BASE_URL = API_BASE;
 
 export default function TrabajoDetalle() {
   const { id } = useParams();
   const [trabajo, setTrabajo] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [imgActiva, setImgActiva] = useState(0);
 
   useEffect(() => {
+    setLoading(true);
     getTrabajoById(id)
       .then((r) => setTrabajo(r.data))
-      .catch(() => setTrabajo(null));
+      .catch(() => setTrabajo(null))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (!trabajo) {
+  if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ color: '#444' }}>Cargando...</p>
+      </div>
+    );
+  }
+
+  if (!trabajo) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1.5rem' }}>
+        <p style={{ color: '#444' }}>Trabajo no encontrado.</p>
       </div>
     );
   }

@@ -1,12 +1,12 @@
 package com.tresdsam.service;
 
 import com.tresdsam.dto.ServicioDTO;
+import com.tresdsam.exception.ResourceNotFoundException;
 import com.tresdsam.model.Servicio;
 import com.tresdsam.repository.ServicioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ServicioService {
@@ -20,13 +20,13 @@ public class ServicioService {
     public List<ServicioDTO> getAll() {
         return servicioRepository.findAllByOrderByOrdenAsc().stream()
                 .map(this::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public ServicioDTO getBySlug(String slug) {
         return servicioRepository.findBySlug(slug)
                 .map(this::toDTO)
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado: " + slug));
+                .orElseThrow(() -> new ResourceNotFoundException("Servicio no encontrado: " + slug));
     }
 
     private ServicioDTO toDTO(Servicio s) {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getServicioBySlug, getTrabajosByCategoria } from '../services/api';
+import { getServicioBySlug, getTrabajosByCategoria, API_BASE } from '../services/api';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-const BASE_URL = 'http://localhost:8090';
+const BASE_URL = API_BASE;
 
 export default function ServicioDetalle() {
   const { slug } = useParams();

@@ -78,7 +78,7 @@ export default function Hero() {
         background: '#000',
       }}
     >
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+      <div className="hero-canvas" style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
         <Canvas
           camera={{ position: [0, 2, 6], fov: 50 }}
           style={{ width: '100%', height: '100%' }}
@@ -134,7 +134,7 @@ export default function Hero() {
             marginTop: '1rem',
           }}
         >
-          IMPRESION Y DISEÑO 3D
+          IMPRESIÓN Y DISEÑO 3D
         </motion.p>
       </div>
 
