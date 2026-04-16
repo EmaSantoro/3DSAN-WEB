@@ -2,11 +2,24 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const HASH_LINKS = [
-  { label: 'Servicios', href: '/#servicios' },
-  { label: 'Nosotros', href: '/#fabricacion' },
-  { label: 'Contacto', href: '/#contacto' },
+const LINKS = [
+  { label: 'Servicios',  href: '/#servicios' },
+  { label: 'Nosotros',   href: '/#fabricacion' },
+  { label: 'Contacto',   href: '/#contacto' },
 ];
+
+const MOBILE_LINKS = [
+  ...LINKS,
+  { label: 'Preguntas Frecuentes', to: '/faq' },
+];
+
+const linkStyle = {
+  color: 'var(--text-2)',
+  textDecoration: 'none',
+  fontSize: '0.82rem',
+  letterSpacing: '0.1em',
+  transition: 'color 0.2s',
+};
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -19,31 +32,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Cerrar menú al cambiar de ruta
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
+  useEffect(() => { setMenuOpen(false); }, [location.pathname]);
 
-  // Bloquear scroll cuando el menú está abierto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
-
-  const linkStyle = {
-    color: 'var(--text-2)',
-    textDecoration: 'none',
-    fontSize: '0.82rem',
-    letterSpacing: '0.1em',
-    transition: 'color 0.2s',
-  };
-
-    const handleLogoClick = (e) => {
-        if (location.pathname === '/') {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    };
 
   return (
     <>
@@ -66,53 +60,44 @@ export default function Navbar() {
           transition: 'background 0.4s, border 0.4s',
         }}
       >
-          {/* Logo con ruta al landing inicio y scroll top */}
-          <Link
-              to="/"
-              onClick={handleLogoClick}
-              style={{ textDecoration: 'none', zIndex: 101 }}
-          >
-              <motion.img
-                  src="/images/3DSANlogoblanco.png"
-                  alt="3DSAN"
-                  whileHover={{ scale: 1.05 }}
-                  style={{
-                      height: '36px',
-                      width: 'auto',
-                      display: 'block',
-                  }}
-              />
-          </Link>
+        <Link
+          to="/"
+          onClick={(e) => {
+            if (location.pathname === '/') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          style={{ textDecoration: 'none', zIndex: 101 }}
+        >
+          <motion.img
+            src="/images/3DSANlogoblanco.png"
+            alt="3DSAN"
+            whileHover={{ scale: 1.05 }}
+            style={{ height: '36px', width: 'auto', display: 'block' }}
+          />
+        </Link>
 
-        {/* Links desktop */}
         <div className="nav-desktop-links" style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
-          {HASH_LINKS.map((link) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              whileHover={{ color: 'var(--blue-light)' }}
-              style={linkStyle}
-            >
+          {LINKS.map((link) => (
+            <motion.a key={link.label} href={link.href} whileHover={{ color: 'var(--blue-light)' }} style={linkStyle}>
               {link.label}
             </motion.a>
           ))}
           <motion.div whileHover={{ color: 'var(--blue-light)' }}>
             <Link
               to="/faq"
-              style={{
-                ...linkStyle,
-                color: location.pathname === '/faq' ? 'var(--blue-light)' : 'var(--text-2)',
-              }}
+              style={{ ...linkStyle, color: location.pathname === '/faq' ? 'var(--blue-light)' : 'var(--text-2)' }}
             >
               Preguntas Frecuentes
             </Link>
           </motion.div>
         </div>
 
-        {/* Botón hamburguesa — mobile */}
         <button
           className="nav-hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menú"
           style={{
             display: 'none',
             background: 'transparent',
@@ -127,27 +112,16 @@ export default function Navbar() {
             height: '40px',
             zIndex: 101,
           }}
-          aria-label="Menú"
         >
-          <motion.span
-            animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff', transformOrigin: 'center' }}
-          />
-          <motion.span
-            animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.2 }}
-            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff' }}
-          />
-          <motion.span
-            animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff', transformOrigin: 'center' }}
-          />
+          <motion.span animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25 }}
+            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff', transformOrigin: 'center' }} />
+          <motion.span animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.2 }}
+            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff' }} />
+          <motion.span animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25 }}
+            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff', transformOrigin: 'center' }} />
         </button>
       </motion.nav>
 
-      {/* Menú overlay mobile */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -167,7 +141,7 @@ export default function Navbar() {
               gap: '0.25rem',
             }}
           >
-            {[...HASH_LINKS, { label: 'Preguntas Frecuentes', to: '/faq' }].map((link, i) => (
+            {MOBILE_LINKS.map((link, i) => (
               <motion.div
                 key={link.label}
                 initial={{ opacity: 0, y: 24 }}
@@ -212,7 +186,6 @@ export default function Navbar() {
               </motion.div>
             ))}
 
-            {/* Info de contacto */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

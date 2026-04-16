@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import ScrollProgress from './components/ScrollProgress';
-import WhatsAppButton from './components/WhatsAppButton'; // <-- 1. Importamos el botón
+import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import FAQ from './pages/FAQ';
 import ServicioDetalle from './pages/ServicioDetalle';
@@ -52,7 +52,7 @@ function AppContent() {
             <ScrollToHash />
             <CustomCursor />
             <ScrollProgress />
-            <WhatsAppButton /> {/* <-- 2. Inyectamos el botón globalmente */}
+            <WhatsAppButton />
             <Navbar />
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>

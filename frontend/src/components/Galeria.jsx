@@ -13,17 +13,15 @@ const CATEGORIAS = [
 
 export default function Galeria() {
   const [trabajos, setTrabajos] = useState([]);
-  const [categoriaIdx, setCategoriaIdx] = useState(0);
+  const [categoria, setCategoria] = useState(CATEGORIAS[0]);
   const [loading, setLoading] = useState(true);
-
-  const categoriaActual = CATEGORIAS[categoriaIdx];
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
       try {
-        const res = categoriaActual.value
-          ? await getTrabajosByCategoria(categoriaActual.value)
+        const res = categoria.value
+          ? await getTrabajosByCategoria(categoria.value)
           : await getTrabajosPublicos();
         setTrabajos(res.data.slice(0, 6));
       } catch {
@@ -33,7 +31,7 @@ export default function Galeria() {
       }
     };
     load();
-  }, [categoriaIdx]);
+  }, [categoria]);
 
   return (
     <section id="trabajos" style={{ padding: '6rem 2rem', background: 'transparent' }}>
@@ -55,16 +53,16 @@ export default function Galeria() {
 
         {/* Filtros */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
-          {CATEGORIAS.map((cat, i) => (
+          {CATEGORIAS.map((cat) => (
             <motion.button
               key={cat.label}
               whileHover={{ scale: 1.02 }}
-              onClick={() => setCategoriaIdx(i)}
+              onClick={() => setCategoria(cat)}
               style={{
-                background: categoriaIdx === i ? '#fff' : 'transparent',
-                color: categoriaIdx === i ? '#000' : 'var(--text-3)',
+                background: categoria === cat ? '#fff' : 'transparent',
+                color: categoria === cat ? '#000' : 'var(--text-3)',
                 border: '1px solid',
-                borderColor: categoriaIdx === i ? '#fff' : 'var(--border)',
+                borderColor: categoria === cat ? '#fff' : 'var(--border)',
                 padding: '0.4rem 1.2rem',
                 cursor: 'pointer',
                 fontSize: '0.8rem',
@@ -93,7 +91,7 @@ export default function Galeria() {
         ) : (
           <AnimatePresence mode="wait">
             <motion.div
-              key={categoriaIdx}
+              key={categoria.label}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
