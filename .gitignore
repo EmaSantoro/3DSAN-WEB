@@ -1,4 +1,5 @@
 CLAUDE.md
+/.claude/settings.local.json
 /backend/src/main/java/resource/application.properties
 # Env files
 .env
