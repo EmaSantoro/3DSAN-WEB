@@ -2,7 +2,6 @@ package com.tresdsam.controller;
 
 import com.tresdsam.dto.TrabajoDTO;
 import com.tresdsam.service.TrabajoService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,21 +32,5 @@ public class TrabajoController {
     @GetMapping("/{id}")
     public TrabajoDTO getById(@PathVariable Long id) {
         return trabajoService.getById(id);
-    }
-
-    @PostMapping
-    public ResponseEntity<TrabajoDTO> create(@RequestBody TrabajoDTO dto) {
-        return ResponseEntity.ok(trabajoService.create(dto));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<TrabajoDTO> update(@PathVariable Long id, @RequestBody TrabajoDTO dto) {
-        return ResponseEntity.ok(trabajoService.update(id, dto));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        trabajoService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

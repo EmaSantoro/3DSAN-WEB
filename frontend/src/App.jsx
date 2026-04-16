@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -10,6 +11,27 @@ import FAQ from './pages/FAQ';
 import ServicioDetalle from './pages/ServicioDetalle';
 import TrabajoDetalle from './pages/TrabajoDetalle';
 import NotFound from './pages/NotFound';
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
+
+function ScrollToHash() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const timer = setTimeout(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [pathname, hash]);
+  return null;
+}
 
 const PageWrapper = ({ children }) => (
     <motion.div
@@ -26,6 +48,8 @@ function AppContent() {
     const location = useLocation();
     return (
         <>
+            <ScrollToTop />
+            <ScrollToHash />
             <CustomCursor />
             <ScrollProgress />
             <WhatsAppButton /> {/* <-- 2. Inyectamos el botón globalmente */}

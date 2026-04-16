@@ -96,18 +96,15 @@ export default function Navbar() {
               {link.label}
             </motion.a>
           ))}
-          <motion.div whileHover={{ scale: 1.05 }}>
+          <motion.div whileHover={{ color: 'var(--blue-light)' }}>
             <Link
               to="/faq"
               style={{
                 ...linkStyle,
                 color: location.pathname === '/faq' ? 'var(--blue-light)' : 'var(--text-2)',
-                border: '1px solid var(--border-bright)',
-                padding: '0.4rem 1.1rem',
-                borderRadius: '2px',
               }}
             >
-              FAQ
+              Preguntas Frecuentes
             </Link>
           </motion.div>
         </div>
@@ -170,7 +167,7 @@ export default function Navbar() {
               gap: '0.25rem',
             }}
           >
-            {[...HASH_LINKS, { label: 'FAQ', to: '/faq' }].map((link, i) => (
+            {[...HASH_LINKS, { label: 'Preguntas Frecuentes', to: '/faq' }].map((link, i) => (
               <motion.div
                 key={link.label}
                 initial={{ opacity: 0, y: 24 }}

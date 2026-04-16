@@ -1,12 +1,10 @@
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer
       style={{
         borderTop: '1px solid var(--border)',
-        background: '#0d0d0d',
-        padding: '4rem 2rem 2.5rem',
+        background: '#111111',
+        padding: '2rem',
       }}
     >
       <div
@@ -15,31 +13,25 @@ export default function Footer() {
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '3rem',
-          marginBottom: '3rem',
+          gap: '2rem',
+          marginBottom: '2rem',
         }}
       >
-        {/* Logo + descripción */}
-        <div>
+        {/* Logo + descripción — centrado */}
+        <div style={{ textAlign: 'center' }}>
           <img
             src="/images/3DSANlogoblanco.png"
             alt="3DSAN"
-            style={{
-              height: '36px',
-              width: 'auto',
-              marginBottom: '1rem',
-              display: 'block',
-              opacity: 0.85,
-            }}
+            style={{ height: '36px', width: 'auto', marginBottom: '0.75rem', display: 'inline-block', opacity: 0.85 }}
           />
-          <p style={{ color: 'var(--text-2)', fontSize: '0.82rem', lineHeight: 1.65 }}>
+          <p style={{ color: 'var(--text-2)', fontSize: '0.82rem', lineHeight: 1.65, margin: 0 }}>
             Impresiones 3D profesionales. Del concepto al objeto.
           </p>
         </div>
 
-        {/* Redes y contacto */}
+        {/* Contacto */}
         <div>
-          <p style={{ color: 'var(--text-3)', fontSize: '0.7rem', letterSpacing: '0.2em', marginBottom: '1.25rem' }}>
+          <p style={{ color: 'var(--text-3)', fontSize: '0.7rem', letterSpacing: '0.2em', marginBottom: '1rem' }}>
             CONTACTO
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
@@ -65,21 +57,17 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom bar — todo centrado */}
       <div
         style={{
           borderTop: '1px solid var(--border)',
-          paddingTop: '1.5rem',
+          paddingTop: '1.25rem',
           display: 'flex',
-          justifyContent: 'space-between',
+          flexDirection: 'column',
           alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
+          gap: '0.3rem',
         }}
       >
-        <p style={{ color: 'var(--text-3)', fontSize: '0.75rem', margin: 0 }}>
-          © {year} 3DSAN — Impresiones 3D Profesionales
-        </p>
         <p style={{ color: 'var(--text-3)', fontSize: '0.75rem', margin: 0 }}>
           Desarrollado por{' '}
           <a
@@ -92,6 +80,9 @@ export default function Footer() {
           >
             Emanuel Santoro
           </a>
+        </p>
+        <p style={{ color: 'var(--text-3)', fontSize: '0.75rem', margin: 0 }}>
+          © 2020–2026 3DSAN
         </p>
       </div>
     </footer>

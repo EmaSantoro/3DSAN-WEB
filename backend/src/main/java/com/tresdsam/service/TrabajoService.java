@@ -41,27 +41,6 @@ public class TrabajoService {
                 .collect(Collectors.toList());
     }
 
-    public TrabajoDTO create(TrabajoDTO dto) {
-        return toDTO(trabajoRepository.save(toEntity(dto)));
-    }
-
-    public TrabajoDTO update(Long id, TrabajoDTO dto) {
-        Trabajo existing = trabajoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trabajo no encontrado con id: " + id));
-        existing.setTitulo(dto.getTitulo());
-        existing.setDescripcion(dto.getDescripcion());
-        existing.setCategoria(dto.getCategoria());
-        existing.setImagenes(dto.getImagenes());
-        existing.setModelo3DPath(dto.getModelo3DPath());
-        existing.setDestacado(dto.getDestacado() != null ? dto.getDestacado() : false);
-        existing.setFecha(dto.getFecha());
-        return toDTO(trabajoRepository.save(existing));
-    }
-
-    public void delete(Long id) {
-        trabajoRepository.deleteById(id);
-    }
-
     private TrabajoDTO toDTO(Trabajo t) {
         TrabajoDTO dto = new TrabajoDTO();
         dto.setId(t.getId());
@@ -73,17 +52,5 @@ public class TrabajoService {
         dto.setDestacado(t.getDestacado());
         dto.setFecha(t.getFecha());
         return dto;
-    }
-
-    private Trabajo toEntity(TrabajoDTO dto) {
-        Trabajo t = new Trabajo();
-        t.setTitulo(dto.getTitulo());
-        t.setDescripcion(dto.getDescripcion());
-        t.setCategoria(dto.getCategoria());
-        t.setImagenes(dto.getImagenes());
-        t.setModelo3DPath(dto.getModelo3DPath());
-        t.setDestacado(dto.getDestacado() != null ? dto.getDestacado() : false);
-        t.setFecha(dto.getFecha());
-        return t;
     }
 }

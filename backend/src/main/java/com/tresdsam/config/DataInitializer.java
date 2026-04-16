@@ -3,71 +3,57 @@ package com.tresdsam.config;
 import com.tresdsam.model.Pregunta;
 import com.tresdsam.model.Servicio;
 import com.tresdsam.model.Trabajo;
-import com.tresdsam.model.Usuario;
 import com.tresdsam.repository.PreguntaRepository;
 import com.tresdsam.repository.ServicioRepository;
 import com.tresdsam.repository.TrabajoRepository;
-import com.tresdsam.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Configuration
 public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(
-            UsuarioRepository usuarioRepository,
             ServicioRepository servicioRepository,
             TrabajoRepository trabajoRepository,
-            PreguntaRepository preguntaRepository,
-            PasswordEncoder passwordEncoder
+            PreguntaRepository preguntaRepository
     ) {
         return args -> {
-
-            // ── Admin ──────────────────────────────────────────────────────
-            if (usuarioRepository.findByUsername("admin").isEmpty()) {
-                Usuario admin = new Usuario();
-                admin.setUsername("admin");
-                admin.setPassword(passwordEncoder.encode("admin123"));
-                admin.setRoles(Set.of("ROLE_ADMIN"));
-                usuarioRepository.save(admin);
-                System.out.println("==> Admin creado: admin / admin123");
-            }
 
             // ── Servicios (sólo si la tabla está vacía) ────────────────────
             if (servicioRepository.count() == 0) {
                 Servicio s1 = servicio("Jarras Personalizadas", "jarras-personalizadas",
                         "Jarras y tazas únicas con tu logo o diseño favorito.",
-                        "Imprimimos jarras y tazas con diseños completamente personalizables. "
+                        "Imprimimos jarras con diseños completamente personalizables. "
                         + "Ideales para regalos corporativos, souvenirs, eventos y uso cotidiano. "
-                        + "Trabajamos con PLA de alta resistencia, disponibles en múltiples colores y acabados. "
-                        + "Capacidad estándar de 350ml y 500ml. Consultanos por pedidos en cantidad.", 1);
+                        + "Trabajamos con PLA de alta resistencia, personalizala con tus colores. "
+                        + "Capacidad estándar de 500ml y 1lts. Consultanos por pedidos en cantidad.",
+                        "/productos/jarras.png", 1);
 
                 Servicio s2 = servicio("Llaveros para Negocios", "llaveros-negocios",
-                        "Llaveros con tu marca, logo o mensaje para regalar o vender.",
+                        "Llaveros con tu marca, logo o mensaje para regalar y/o revender.",
                         "Llaveros impresos en 3D, resistentes y personalizables al 100%. "
-                        + "Perfectos para hoteles, inmobiliarias, autos, bicicletas y promociones. "
-                        + "Disponibles en distintas formas, colores y terminaciones. "
-                        + "Realizamos desde unidades sueltas hasta grandes lotes para eventos o distribución.", 2);
+                        + "Personalizables con el logo de tu negocio o empresa. "
+                        + "Realizamos pedidos minoristas y mayoristas.",
+                        "/productos/llaveros.png", 2);
 
                 Servicio s3 = servicio("Piezas Funcionales", "piezas-funcionales",
                         "Repuestos, soportes y piezas técnicas a medida para industria y hogar.",
                         "Imprimimos piezas técnicas de alta precisión: repuestos, soportes, "
-                        + "piezas de maquinaria, adaptadores y más. Trabajamos con PLA, PETG y ABS "
+                        + "piezas de maquinaria, adaptadores y más. Trabajamos con PLA, PETG, TPU y ABS "
                         + "según los requerimientos de resistencia del cliente. "
-                        + "Enviás el archivo o medidas y nosotros modelamos la pieza.", 3);
+                        + "Enviás el archivo o medidas y nosotros modelamos la pieza.",
+                        "/productos/personalizados.jpeg", 3);
 
                 Servicio s4 = servicio("Productos Essen", "productos-essen",
-                        "Accesorios y organizadores para el catálogo Essen, a medida.",
-                        "Fabricamos piezas y accesorios complementarios para utensilios Essen: "
-                        + "soportes para tapas, organizadores, bases antideslizantes, porta-ollas y más. "
-                        + "Productos de alta calidad que complementan y potencian tu kit de cocina.", 4);
+                        "LLaveros, carteles y soportes de tapa, para tu emprendimiento Essen.",
+                        "Fabricamos piezas y accesorios para que destaques con tus clientes; "
+                        + "Productos de alta calidad que complementan y potencian tus ventas.",
+                        "/productos/essen.png", 4);
 
                 servicioRepository.saveAll(List.of(s1, s2, s3, s4));
                 System.out.println("==> Servicios mock creados");
@@ -115,13 +101,13 @@ public class DataInitializer {
             if (preguntaRepository.count() == 0) {
                 List<Pregunta> faqs = List.of(
                     pregunta("¿Cuánto tarda una impresión?",
-                        "El tiempo varía según la complejidad y tamaño de la pieza. Una pieza pequeña puede estar lista en pocas horas, mientras que proyectos más complejos pueden llevar uno o dos días. Te damos un tiempo estimado al recibir tu pedido.", 1),
+                        "El tiempo varía según la complejidad y tamaño de la pieza. Una pieza pequeña puede estar lista en pocas horas, mientras que proyectos más complejos pueden llevar días. Te damos un tiempo estimado al recibir tu pedido.", 1),
                     pregunta("¿Qué materiales utilizan?",
                         "Trabajamos principalmente con PLA, PETG, ABS y TPU. Cada material tiene características distintas en cuanto a resistencia, flexibilidad y temperatura. Te asesoramos sobre cuál es el mejor para tu proyecto sin costo adicional.", 2),
                     pregunta("¿Puedo enviarles mi propio diseño?",
                         "Sí, aceptamos archivos STL y OBJ. Si no tenés el archivo, podés describirnos lo que necesitás o enviarnos una imagen de referencia y nos encargamos del modelado 3D.", 3),
                     pregunta("¿Hacen envíos a todo el país?",
-                        "Sí, enviamos a todo Argentina mediante OCA, Andreani y Correo Argentino. El costo de envío se calcula según el peso y el destino y te lo informamos antes de confirmar el pedido.", 4),
+                        "Sí, enviamos a todo Argentina mediante Correo Argentino. El costo de envío se calcula según el peso y el destino y te lo informamos antes de confirmar el pedido.", 4),
                     pregunta("¿Cuál es el pedido mínimo?",
                         "No tenemos pedido mínimo. Fabricamos desde una sola pieza hasta lotes de producción para empresas. Cada pedido recibe la misma atención y calidad.", 5),
                     pregunta("¿Cómo solicito un presupuesto?",
@@ -145,12 +131,13 @@ public class DataInitializer {
         return p;
     }
 
-    private Servicio servicio(String nombre, String slug, String corta, String detalle, int orden) {
+    private Servicio servicio(String nombre, String slug, String corta, String detalle, String imagen, int orden) {
         Servicio s = new Servicio();
         s.setNombre(nombre);
         s.setSlug(slug);
         s.setDescripcionCorta(corta);
         s.setDescripcionDetalle(detalle);
+        s.setImagenPortada(imagen);
         s.setOrden(orden);
         return s;
     }

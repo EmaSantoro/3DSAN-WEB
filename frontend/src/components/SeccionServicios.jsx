@@ -95,7 +95,7 @@ function ServicioCard({ servicio, index }) {
       <div style={{ aspectRatio: '16/9', position: 'relative', overflow: 'hidden', background: 'var(--bg-3)' }}>
         {hasImg ? (
           <motion.img
-            src={`${BASE}${servicio.imagenPortada}`}
+            src={servicio.imagenPortada}
             alt={servicio.nombre}
             animate={{ scale: hovered ? 1.08 : 1 }}
             transition={{ duration: 0.5 }}

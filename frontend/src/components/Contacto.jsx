@@ -1,27 +1,21 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { enviarContacto } from '../services/api';
+
+const WA_NUMBER = '541138606451';
 
 export default function Contacto() {
-  const [form, setForm] = useState({ nombre: '', email: '', telefono: '', mensaje: '' });
-  const [estado, setEstado] = useState(null); // 'ok' | 'error' | null
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ nombre: '', mensaje: '' });
+  const [enviado, setEnviado] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setEstado(null);
-    try {
-      await enviarContacto(form);
-      setEstado('ok');
-      setForm({ nombre: '', email: '', telefono: '', mensaje: '' });
-    } catch {
-      setEstado('error');
-    } finally {
-      setLoading(false);
-    }
+    const texto = `Hola! Soy *${form.nombre}*.\n\n${form.mensaje}`;
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
+    setEnviado(true);
+    setForm({ nombre: '', mensaje: '' });
   };
 
   const inputStyle = {
@@ -68,35 +62,10 @@ export default function Contacto() {
               value={form.nombre}
               onChange={handleChange}
               required
-              disabled={loading}
               style={inputStyle}
             />
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-            <div>
-              <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>EMAIL</label>
-              <input
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                disabled={loading}
-                style={inputStyle}
-              />
-            </div>
-            <div>
-              <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>TELÉFONO <span style={{ opacity: 0.5 }}>(opcional)</span></label>
-              <input
-                name="telefono"
-                type="tel"
-                value={form.telefono}
-                onChange={handleChange}
-                disabled={loading}
-                style={inputStyle}
-              />
-            </div>
-          </div>
+
           <div>
             <label style={{ color: 'var(--text-3)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>MENSAJE</label>
             <textarea
@@ -104,72 +73,41 @@ export default function Contacto() {
               value={form.mensaje}
               onChange={handleChange}
               required
-              disabled={loading}
               rows={4}
               style={{ ...inputStyle, resize: 'none', fontFamily: 'inherit' }}
             />
           </div>
 
-          {estado === 'ok' && (
+          {enviado && (
             <motion.p
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               style={{ color: '#4ade80', fontSize: '0.9rem' }}
             >
-              Mensaje enviado correctamente. Te respondemos a la brevedad.
-            </motion.p>
-          )}
-          {estado === 'error' && (
-            <motion.p
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{ color: '#f87171', fontSize: '0.9rem' }}
-            >
-              Error al enviar. Intentá de nuevo o escribinos a impresiones3dsan@gmail.com
+              ¡WhatsApp abierto! Si no se abrió,{' '}
+              <a href={`https://wa.me/${WA_NUMBER}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue-light)' }}>
+                tocá acá
+              </a>.
             </motion.p>
           )}
 
           <motion.button
             type="submit"
-            disabled={loading}
-            whileHover={!loading ? { background: 'var(--blue)', borderColor: 'var(--blue)', boxShadow: '0 0 30px var(--blue-glow2)' } : {}}
+            whileHover={{ background: 'var(--blue)', borderColor: 'var(--blue)', boxShadow: '0 0 30px var(--blue-glow2)' }}
             style={{
               background: 'transparent',
               border: '1px solid var(--border-bright)',
-              color: loading ? 'var(--text-3)' : 'var(--text)',
+              color: 'var(--text)',
               padding: '1rem 2.5rem',
               fontSize: '0.85rem',
               letterSpacing: '0.15em',
-              cursor: loading ? 'not-allowed' : 'pointer',
+              cursor: 'pointer',
               alignSelf: 'flex-start',
               transition: 'all 0.3s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
               minWidth: '180px',
-              justifyContent: 'center',
             }}
           >
-            {loading ? (
-              <>
-                <motion.span
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  style={{
-                    display: 'block',
-                    width: '14px',
-                    height: '14px',
-                    border: '2px solid var(--border-bright)',
-                    borderTopColor: 'var(--text)',
-                    borderRadius: '50%',
-                    flexShrink: 0,
-                  }}
-                />
-                ENVIANDO...
-              </>
-            ) : (
-              'ENVIAR MENSAJE'
-            )}
+            ENVIAR POR WHATSAPP
           </motion.button>
         </motion.form>
       </div>

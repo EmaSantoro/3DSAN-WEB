@@ -8,7 +8,7 @@ export default function Destacados() {
 
   useEffect(() => {
     getDestacados()
-      .then((r) => setDestacados(r.data))
+      .then((r) => setDestacados(r.data.slice(0, 6)))
       .catch(() => setDestacados([]));
   }, []);
 
@@ -17,7 +17,7 @@ export default function Destacados() {
   return (
     <section
       id="destacados"
-      style={{ padding: '8rem 2rem', background: '#050505' }}
+      style={{ padding: '6rem 2rem', background: 'transparent' }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <motion.div
