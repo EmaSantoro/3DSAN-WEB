@@ -78,6 +78,20 @@ export default function Hero() {
         background: '#000',
       }}
     >
+      <div 
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '60vw',
+          height: '60vw',
+          background: 'radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
       <div className="hero-canvas" style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
         <Canvas
           camera={{ position: [0, 2, 6], fov: 50 }}

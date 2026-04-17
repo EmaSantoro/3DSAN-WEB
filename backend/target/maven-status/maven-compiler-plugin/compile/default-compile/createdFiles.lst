@@ -1,3 +1,4 @@
+com\tresdsam\exception\GlobalExceptionHandler.class
 com\tresdsam\service\ServicioService.class
 com\tresdsam\dto\ServicioDTO.class
 com\tresdsam\model\Trabajo.class
@@ -12,6 +13,8 @@ com\tresdsam\repository\ServicioRepository.class
 com\tresdsam\config\DataInitializer.class
 com\tresdsam\model\Pregunta.class
 com\tresdsam\repository\PreguntaRepository.class
+com\tresdsam\exception\ResourceNotFoundException.class
+com\tresdsam\security\SecurityConfig$ApiKeyFilter.class
 com\tresdsam\model\Servicio.class
 com\tresdsam\repository\ContactoRepository.class
 com\tresdsam\controller\TrabajoController.class

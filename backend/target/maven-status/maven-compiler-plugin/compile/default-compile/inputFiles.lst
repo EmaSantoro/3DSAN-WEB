@@ -7,6 +7,8 @@ C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\co
 C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\dto\ContactoDTO.java
 C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\dto\ServicioDTO.java
 C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\dto\TrabajoDTO.java
+C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\exception\GlobalExceptionHandler.java
+C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\exception\ResourceNotFoundException.java
 C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\model\Contacto.java
 C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\model\Pregunta.java
 C:\Users\Usuario\Desktop\proyectosClaude\mi-primera-app\backend\src\main\java\com\tresdsam\model\Servicio.java

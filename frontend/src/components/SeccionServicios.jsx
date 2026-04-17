@@ -5,6 +5,8 @@ import { getServicios } from '../services/api';
 
 
 
+import Reveal from './Reveal';
+
 export default function SeccionServicios() {
   const [servicios, setServicios] = useState([]);
 
@@ -16,20 +18,18 @@ export default function SeccionServicios() {
     <section id="servicios" style={{ padding: '6rem 2rem', background: 'transparent', position: 'relative' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          style={{ marginBottom: '4rem' }}
-        >
-          <p style={{ color: 'var(--blue-light)', letterSpacing: '0.35em', fontSize: '0.72rem', marginBottom: '1rem' }}>
-            COLECCIONES
-          </p>
-          <h2 style={{ color: '#fff', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, letterSpacing: '-0.02em', margin: 0 }}>
-            Nuestros Servicios
-          </h2>
-        </motion.div>
+        <div style={{ marginBottom: '4rem' }}>
+          <Reveal>
+            <p style={{ color: 'var(--blue-light)', letterSpacing: '0.35em', fontSize: '0.72rem', marginBottom: '1rem', textTransform: 'uppercase' }}>
+              Colecciones
+            </p>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <h2 style={{ color: '#fff', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, letterSpacing: '-0.02em', margin: 0 }}>
+              Nuestros Servicios
+            </h2>
+          </Reveal>
+        </div>
 
         {servicios.length === 0 ? (
           <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
@@ -55,13 +55,13 @@ function ServicioCard({ servicio, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -8, boxShadow: '0 24px 60px rgba(0,0,0,0.5)' }}
+      whileHover={{ y: -8 }}
       style={{
         background: 'var(--bg-4)',
         border: '1px solid var(--border)',
@@ -71,8 +71,9 @@ function ServicioCard({ servicio, index }) {
         flexDirection: 'column',
         position: 'relative',
         cursor: 'pointer',
-        transition: 'border-color 0.3s',
-        borderColor: hovered ? 'var(--border-bright)' : 'var(--border)',
+        transition: 'border-color 0.3s, box-shadow 0.3s',
+        borderColor: hovered ? 'var(--blue-light)' : 'var(--border)',
+        boxShadow: hovered ? '0 20px 40px rgba(0,0,0,0.4)' : 'none'
       }}
     >
       {/* Número de orden */}

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Reveal from './Reveal';
 
 const RAZONES = [
   {
@@ -35,49 +36,55 @@ const RAZONES = [
 
 export default function SeccionPorQueElegirnos() {
   return (
-    <section style={{ padding: '6rem 2rem', background: 'transparent' }}>
+    <section style={{ padding: '10rem 2rem', background: 'transparent' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ marginBottom: '4rem', textAlign: 'center' }}
-        >
-          <p style={{ color: 'var(--blue-light)', letterSpacing: '0.35em', fontSize: '0.72rem', marginBottom: '1rem' }}>
-            NUESTRA PROPUESTA
-          </p>
-          <h2
-            style={{
-              color: '#fff',
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 900,
-              letterSpacing: '-0.02em',
-              margin: 0,
-            }}
-          >
-            ¿Por qué elegirnos?
-          </h2>
-        </motion.div>
+        <div style={{ marginBottom: '5rem', textAlign: 'center' }}>
+          <Reveal>
+            <p style={{ color: 'var(--blue-light)', letterSpacing: '0.4em', fontSize: '0.75rem', fontWeight: 600, marginBottom: '1.5rem', textTransform: 'uppercase' }}>
+              Nuestra Propuesta
+            </p>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <h2
+              style={{
+                color: '#fff',
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                fontWeight: 900,
+                letterSpacing: '-0.02em',
+                margin: 0,
+              }}
+            >
+              ¿Por qué elegirnos?
+            </h2>
+          </Reveal>
+        </div>
 
         {/* Grid 3×2 perfectamente simétrico via clase CSS */}
         <div className="por-que-grid">
           {RAZONES.map((r, i) => (
             <motion.div
               key={r.num}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: i * 0.07 }}
-              whileHover={{ background: 'rgba(59,130,246,0.05)' }}
-              style={{ padding: '2.5rem', transition: 'background 0.3s' }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ backgroundColor: 'rgba(59,130,246,0.08)' }}
+              style={{ padding: '3rem 2.5rem', transition: 'background-color 0.4s' }}
             >
-              <div style={{ color: 'var(--border-bright)', fontSize: '1.5rem', fontWeight: 800, marginBottom: '1rem', lineHeight: 1 }}>
+              <div style={{ 
+                color: 'rgba(255,255,255,0.05)', 
+                fontSize: '3rem', 
+                fontWeight: 900, 
+                marginBottom: '1rem', 
+                lineHeight: 1,
+                fontVariantNumeric: 'tabular-nums'
+              }}>
                 {r.num}
               </div>
-              <h3 style={{ color: 'var(--text)', fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.7rem' }}>
+              <h3 style={{ color: '#fff', fontWeight: 700, fontSize: '1.1rem', marginBottom: '1rem' }}>
                 {r.titulo}
               </h3>
-              <p style={{ color: 'var(--text-2)', fontSize: '0.86rem', lineHeight: 1.72, margin: 0 }}>
+              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', lineHeight: 1.8, margin: 0 }}>
                 {r.desc}
               </p>
             </motion.div>

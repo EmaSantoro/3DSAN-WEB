@@ -9,7 +9,6 @@
 * **Portafolio Interactivo:** Visualización detallada de trabajos realizados y servicios ofrecidos.
 * **Visor 3D:** Integración de modelos tridimensionales mediante **Three.js** para una experiencia inmersiva.
 * **Interfaz Fluida:** Navegación optimizada y animaciones dinámicas con **Framer Motion**.
-* **Panel de Administración:** Gestión de contenidos (servicios, trabajos y FAQs) protegida mediante autenticación segura.
 * **Diseño Responsive:** Adaptabilidad total para dispositivos móviles y escritorio.
 
 ---

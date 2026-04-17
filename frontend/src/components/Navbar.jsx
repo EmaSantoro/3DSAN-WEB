@@ -13,51 +13,43 @@ const MOBILE_LINKS = [
   { label: 'Preguntas Frecuentes', to: '/faq' },
 ];
 
-const linkStyle = {
-  color: 'var(--text-2)',
-  textDecoration: 'none',
-  fontSize: '0.82rem',
-  letterSpacing: '0.1em',
-  transition: 'color 0.2s',
-};
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => { setMenuOpen(false); }, [location.pathname]);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
-
   return (
     <>
       <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
+        initial={{ y: -100, x: "-50%" }}
+        animate={{ y: 0, x: "-50%" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed',
-          top: 0, left: 0, right: 0,
-          zIndex: 100,
-          padding: '0 2.5rem',
+          top: scrolled ? '1rem' : '1.5rem',
+          left: '50%',
+          width: '90%',
+          maxWidth: scrolled ? '680px' : '1200px',
           height: '64px',
+          borderRadius: '32px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: scrolled || menuOpen ? 'rgba(8,8,8,0.95)' : 'transparent',
-          backdropFilter: scrolled || menuOpen ? 'blur(20px)' : 'none',
-          borderBottom: scrolled && !menuOpen ? '1px solid var(--border)' : 'none',
-          transition: 'background 0.4s, border 0.4s',
+          padding: scrolled ? '0 1.5rem' : '0 2rem',
+          zIndex: 100,
+          transition: 'max-width 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s, top 0.4s, padding 0.6s',
+          border: '1px solid rgba(255,255,255,0.1)',
+          backgroundColor: scrolled ? 'rgba(10, 10, 10, 0.85)' : 'rgba(10, 10, 10, 0.3)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
         }}
       >
         <Link
@@ -68,57 +60,68 @@ export default function Navbar() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }
           }}
-          style={{ textDecoration: 'none', zIndex: 101 }}
+          style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', flexShrink: 0 }}
         >
           <motion.img
             src="/images/3DSANlogoblanco.png"
             alt="3DSAN"
             whileHover={{ scale: 1.05 }}
-            style={{ height: '36px', width: 'auto', display: 'block' }}
+            style={{ height: '30px', width: 'auto', display: 'block' }}
           />
         </Link>
 
+        {/* Desktop Links */}
         <div className="nav-desktop-links" style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
           {LINKS.map((link) => (
-            <motion.a key={link.label} href={link.href} whileHover={{ color: 'var(--blue-light)' }} style={linkStyle}>
+            <motion.a
+              key={link.label}
+              href={link.href}
+              whileHover={{ color: '#fff', y: -2 }}
+              style={{
+                color: 'rgba(255,255,255,0.6)',
+                textDecoration: 'none',
+                fontSize: '0.8rem',
+                fontWeight: 500,
+                letterSpacing: '0.05em',
+                transition: 'color 0.3s'
+              }}
+            >
               {link.label}
             </motion.a>
           ))}
-          <motion.div whileHover={{ color: 'var(--blue-light)' }}>
-            <Link
-              to="/faq"
-              style={{ ...linkStyle, color: location.pathname === '/faq' ? 'var(--blue-light)' : 'var(--text-2)' }}
-            >
-              Preguntas Frecuentes
-            </Link>
-          </motion.div>
+          <Link
+            to="/faq"
+            style={{
+              background: '#2563eb',
+              color: '#fff',
+              textDecoration: 'none',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              padding: '0.5rem 1.2rem',
+              borderRadius: '20px',
+              transition: 'background 0.3s'
+            }}
+          >
+            FAQ
+          </Link>
         </div>
 
+        {/* Hamburger - Breakpoint corregido para evitar choque */}
         <button
           className="nav-hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Menú"
           style={{
             display: 'none',
             background: 'transparent',
             border: 'none',
             cursor: 'pointer',
             padding: '0.5rem',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '5px',
-            width: '40px',
-            height: '40px',
             zIndex: 101,
           }}
         >
-          <motion.span animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25 }}
-            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff', transformOrigin: 'center' }} />
-          <motion.span animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.2 }}
-            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff' }} />
-          <motion.span animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} transition={{ duration: 0.25 }}
-            style={{ display: 'block', width: '22px', height: '1.5px', background: '#fff', transformOrigin: 'center' }} />
+          <div style={{ width: '22px', height: '2px', background: '#fff', marginBottom: '5px', transition: '0.3s', transform: menuOpen ? 'rotate(45deg) translateY(10px)' : 'none' }} />
+          <div style={{ width: '22px', height: '2px', background: '#fff', marginBottom: '5px', opacity: menuOpen ? 0 : 1 }} />
+          <div style={{ width: '22px', height: '2px', background: '#fff', transition: '0.3s', transform: menuOpen ? 'rotate(-45deg) translateY(-10px)' : 'none' }} />
         </button>
       </motion.nav>
 
@@ -128,82 +131,37 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
             style={{
               position: 'fixed',
               inset: 0,
               zIndex: 99,
-              background: 'var(--bg-1)',
+              background: 'rgba(5,5,5,0.98)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '0.25rem',
+              gap: '2.5rem',
             }}
           >
             {MOBILE_LINKS.map((link, i) => (
-              <motion.div
-                key={link.label}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 + 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <motion.div key={link.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
                 {link.to ? (
-                  <Link
-                    to={link.to}
-                    onClick={() => setMenuOpen(false)}
-                    style={{
-                      display: 'block',
-                      color: location.pathname === link.to ? 'var(--blue-light)' : '#fff',
-                      textDecoration: 'none',
-                      fontSize: 'clamp(2.2rem, 9vw, 3.5rem)',
-                      fontWeight: 900,
-                      letterSpacing: '-0.02em',
-                      padding: '0.4rem 2rem',
-                      textAlign: 'center',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
+                  <Link to={link.to} onClick={() => setMenuOpen(false)} style={{ color: '#fff', textDecoration: 'none', fontSize: '2rem', fontWeight: 800 }}>{link.label}</Link>
                 ) : (
-                  <a
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    style={{
-                      display: 'block',
-                      color: '#fff',
-                      textDecoration: 'none',
-                      fontSize: 'clamp(2.2rem, 9vw, 3.5rem)',
-                      fontWeight: 900,
-                      letterSpacing: '-0.02em',
-                      padding: '0.4rem 2rem',
-                      textAlign: 'center',
-                    }}
-                  >
-                    {link.label}
-                  </a>
+                  <a href={link.href} onClick={() => setMenuOpen(false)} style={{ color: '#fff', textDecoration: 'none', fontSize: '2rem', fontWeight: 800 }}>{link.label}</a>
                 )}
               </motion.div>
             ))}
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.45 }}
-              style={{
-                position: 'absolute',
-                bottom: '2.5rem',
-                color: 'var(--text-3)',
-                fontSize: '0.72rem',
-                letterSpacing: '0.08em',
-                textAlign: 'center',
-              }}
-            >
-              @3d.san — impresiones3dsan@gmail.com
-            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 1050px) {
+          .nav-desktop-links { display: none !important; }
+          .nav-hamburger { display: block !important; }
+        }
+      `}} />
     </>
   );
 }
