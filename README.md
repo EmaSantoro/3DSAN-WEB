@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Características Principales
+## Características Principales
 
 * **Portafolio Interactivo:** Visualización detallada de trabajos realizados y servicios ofrecidos.
 * **Visor 3D:** Integración de modelos tridimensionales mediante **Three.js** para una experiencia inmersiva.
@@ -13,7 +13,7 @@
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 | Capa | Tecnología |
 | :--- | :--- |
@@ -26,7 +26,7 @@
 
 ---
 
-## 🏗️ Estructura del Proyecto
+## Estructura del Proyecto
 
 El sistema utiliza una arquitectura desacoplada para facilitar el mantenimiento y la escalabilidad:
 
@@ -35,7 +35,7 @@ El sistema utiliza una arquitectura desacoplada para facilitar el mantenimiento 
 
 ---
 
-## 🔧 Configuración e Instalación
+## Configuración e Instalación
 
 ### Requisitos Previos
 * Java JDK 17 o superior.
