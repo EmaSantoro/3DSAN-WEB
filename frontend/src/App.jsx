@@ -14,9 +14,20 @@ import NotFound from './pages/NotFound';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
+
   useEffect(() => {
-    if (!hash) window.scrollTo(0, 0);
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
   }, [pathname, hash]);
+
   return null;
 }
 
@@ -35,11 +46,11 @@ function ScrollToHash() {
 
 const PageWrapper = ({ children }) => (
     <motion.div
-        initial={{ opacity: 0, y: 15, scale: 0.98, filter: 'blur(10px)' }}
-        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, y: -15, scale: 0.98, filter: 'blur(10px)' }}
+        initial={{ opacity: 0, y: 10, filter: 'blur(10px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, y: -10, filter: 'blur(10px)' }}
         transition={{ 
-            duration: 0.8, 
+            duration: 0.6, 
             ease: [0.22, 1, 0.36, 1] 
         }}
     >

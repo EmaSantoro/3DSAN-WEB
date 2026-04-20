@@ -76,13 +76,10 @@ export default function SeccionIntro() {
               <motion.div 
                 whileHover={{ scale: 1.1, color: '#fff' }}
                 style={{
-                  color: '#fff',
+                  color: 'var(--blue-light)',
                   fontSize: '2.8rem',
                   fontWeight: 900,
                   letterSpacing: '-0.02em',
-                  background: 'linear-gradient(135deg, #fff 30%, var(--blue-light) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
                   marginBottom: '0.5rem'
                 }}
               >

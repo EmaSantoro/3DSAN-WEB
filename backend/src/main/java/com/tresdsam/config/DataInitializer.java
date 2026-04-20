@@ -49,7 +49,7 @@ public class DataInitializer {
                         + "piezas de maquinaria, adaptadores y más. Trabajamos con PLA, PETG, TPU y ABS "
                         + "según los requerimientos de resistencia del cliente. "
                         + "Enviás el archivo o medidas y nosotros modelamos la pieza.",
-                        "/productos/personalizados.jpeg", 3);
+                        "/images/imagesCarrete/personalizados.jpeg", 3);
 
                 Servicio s4 = servicio("Productos Essen", "productos-essen",
                         "LLaveros, carteles y soportes de tapa, para tu emprendimiento Essen.",
@@ -63,36 +63,42 @@ public class DataInitializer {
                 // ── Trabajos mock ──────────────────────────────────────────
                 List<Trabajo> trabajos = List.of(
                     // Jarras
-                    trabajo("Jarra logo empresa textil", "Jarra de 500ml con el logo de una empresa textil local. "
-                        + "Acabado mate en negro con grabado en relieve del isotipo.", "jarras-personalizadas", true),
-                    trabajo("Taza personalizada cumpleaños", "Taza de 350ml con nombre y fecha especial. "
-                        + "Impresa en blanco y rosa para regalo de cumpleaños.", "jarras-personalizadas", false),
-                    trabajo("Set de jarras corporativas", "Lote de 50 jarras con logo de empresa de seguros. "
-                        + "Entregadas en caja individual para regalo corporativo.", "jarras-personalizadas", false),
+                    trabajo("Jarra Blest Barber Shop", "Jarras de 1lts para Blest Barber Shop. "
+                        + "Acabado mate en negro con detalles dorados + Logo Personalizado.", "jarras-personalizadas", true, 
+                        List.of("/productos/jarras/blest-jarra.jpeg")),
+                    trabajo("Jarra Rose Park", "Jarras de 1lts para Boliche Rose. "
+                        + "Acabado mate en negro con detalles rosa + Logo Personalizado.", "jarras-personalizadas", true, 
+                        List.of("/productos/jarras/rose-jarra.jpeg")),
+                        trabajo("Jarra Copa Del Mundo", "Jarras de 500ml con forma de la copa del mundo WORLDCUP. "
+                                        + "Diseño con la mas alta calidad de detalles, realizado en material color dorado.", "jarras-personalizadas", true,
+                                List.of("/productos/jarras/jarrasCopa1.png", "/productos/jarras/jarrasCopa2.png", "/productos/jarras/jarrasCopa3.png")),
 
                     // Llaveros
-                    trabajo("Llaveros inmobiliaria Rivera", "Llaveros con logo de inmobiliaria para entrega a clientes. "
-                        + "Producción de 200 unidades en color blanco y rojo.", "llaveros-negocios", true),
-                    trabajo("Llavero hotel boutique", "Llavero numeral para habitaciones de hotel boutique. "
-                        + "Diseño minimalista con número en relieve y textura premium.", "llaveros-negocios", false),
-                    trabajo("Llaveros bicicleta personalizado", "Llavero portátil con nombre del propietario "
-                        + "y número de contacto para bicicletas y motos.", "llaveros-negocios", false),
+                    trabajo("Llaveros Loba", "Llaveros personalizados para Boliche Loba. "
+                                    + "Diseño con relieve en dos tonos (gris y negro) con detalle de orejas de lobo.", "llaveros-negocios", true,
+                            List.of("/productos/llaveros/llaveroLoba.png")),
+                    trabajo("Llaveros Rose Park", "Llaveros para Boliche Rose. "
+                                    + "Base roja con tipografía en relieve blanco, terminación rígida de alta durabilidad.", "llaveros-negocios", true,
+                            List.of("/productos/llaveros/llaveroRose.png")),
+                    trabajo("Llaveros Singapur", "Llaveros corporativos para Boliche Singapur. "
+                                    + "Impresión multi-capa en rojo y blanco con tipografía stencil.", "llaveros-negocios", true,
+                            List.of("/productos/llaveros/llaveroSingapur.png")),
+                    trabajo("Llaveros Honney", "Llaveros personalizados para Boliche Honney. "
+                                    + "Contraste elegante en negro y naranja con textura superficial de alta calidad.", "llaveros-negocios", true,
+                            List.of("/productos/llaveros/llaveroHoney2.png", "/productos/llaveros/llaveroHoney1.png")),
+                    trabajo("Llaveros Pachangón", "Llaveros multicolor para Boliche Pachangón. "
+                                    + "Diseño dinámico con múltiples cambios de filamento para un acabado festivo.", "llaveros-negocios", true,
+                            List.of("/productos/llaveros/llaveroPachangon.png")),
 
                     // Piezas funcionales
                     trabajo("Soporte para tablet industrial", "Soporte articulado impreso en PETG para tablet "
-                        + "en línea de producción. Resistente a temperaturas de hasta 80°C.", "piezas-funcionales", true),
-                    trabajo("Repuesto bisagra electrodoméstico", "Bisagra para horno de cocina descontinuada. "
-                        + "Modelada a partir de la pieza original y reimpresa en ABS.", "piezas-funcionales", false),
-                    trabajo("Adaptador cañería 3/4\"", "Adaptador personalizado para sistema de riego. "
-                        + "Diseñado en PETG resistente al agua y a la presión.", "piezas-funcionales", false),
+                        + "en línea de producción. Resistente a temperaturas de hasta 80°C.", "piezas-funcionales", true, 
+                        List.of("/images/imagesCarrete/personalizados.jpeg")),
 
                     // Productos Essen
                     trabajo("Soporte tapa Essen 24cm", "Soporte de pared para tapa de olla Essen 24cm. "
-                        + "Impreso en blanco, montaje sin herramientas.", "productos-essen", true),
-                    trabajo("Organizador utensilios Essen", "Organizador de cajón para set de utensilios Essen. "
-                        + "Diseño modular, disponible en gris y negro.", "productos-essen", false),
-                    trabajo("Base antideslizante olla 28cm", "Base de silicona-PLA para olla Essen 28cm. "
-                        + "Protege la superficie y evita deslizamientos.", "productos-essen", false)
+                        + "Impreso en blanco, montaje sin herramientas.", "productos-essen", true, 
+                        List.of("/productos/essen.png"))
                 );
 
                 trabajoRepository.saveAll(trabajos);
@@ -144,13 +150,15 @@ public class DataInitializer {
         return s;
     }
 
-    private Trabajo trabajo(String titulo, String descripcion, String categoria, boolean destacado) {
+    private Trabajo trabajo(String titulo, String descripcion, String categoria, boolean destacado, List<String> imagenes) {
         Trabajo t = new Trabajo();
         t.setTitulo(titulo);
         t.setDescripcion(descripcion);
         t.setCategoria(categoria);
         t.setDestacado(destacado);
+        t.setImagenes(imagenes);
         t.setFecha(LocalDate.now().minusDays((long)(Math.random() * 180)));
         return t;
     }
+
 }

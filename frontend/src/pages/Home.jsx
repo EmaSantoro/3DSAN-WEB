@@ -5,7 +5,6 @@ import SeccionServicios from '../components/SeccionServicios';
 import SeccionPersonalizados from '../components/SeccionPersonalizados';
 import SeccionFabricacion from '../components/SeccionFabricacion';
 import Destacados from '../components/Destacados';
-import Galeria from '../components/Galeria';
 import SeccionPorQueElegirnos from '../components/SeccionPorQueElegirnos';
 import Contacto from '../components/Contacto';
 
@@ -26,8 +25,6 @@ export default function Home() {
       <SeccionFabricacion />
       <Divider />
       <Destacados />
-      <Divider />
-      <Galeria />
       <Divider />
       <SeccionPorQueElegirnos />
       <Divider />

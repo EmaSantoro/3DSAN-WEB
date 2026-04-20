@@ -12,7 +12,6 @@ public class TrabajoDTO {
     private String descripcion;
     private String categoria;
     private List<String> imagenes;
-    private String modelo3DPath;
     private Boolean destacado;
     private LocalDate fecha;
 }

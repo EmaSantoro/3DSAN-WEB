@@ -36,6 +36,13 @@ export default function TrabajoDetalle() {
     );
   }
 
+  const getImagenUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith('http')) return path;
+    if (path.startsWith('/productos') || path.startsWith('/images')) return path;
+    return `${BASE_URL}${path}`;
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: '#000', padding: '6rem 2rem 4rem' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
@@ -55,28 +62,43 @@ export default function TrabajoDetalle() {
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
             {trabajo.imagenes?.length > 0 ? (
               <>
-                <img
-                  src={`${BASE_URL}${trabajo.imagenes[imgActiva]}`}
-                  alt={trabajo.titulo}
-                  style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block', marginBottom: '0.75rem' }}
-                />
+                <div style={{ background: '#080808', borderRadius: '4px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.75rem' }}>
+                  <img
+                    src={getImagenUrl(trabajo.imagenes[imgActiva])}
+                    alt={trabajo.titulo}
+                    style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }}
+                  />
+                </div>
                 {trabajo.imagenes.length > 1 && (
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     {trabajo.imagenes.map((img, i) => (
-                      <img
+                      <div
                         key={i}
-                        src={`${BASE_URL}${img}`}
                         onClick={() => setImgActiva(i)}
                         style={{
-                          width: '60px',
-                          height: '60px',
-                          objectFit: 'cover',
+                          width: '80px',
+                          height: '80px',
+                          background: '#080808',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                           cursor: 'pointer',
                           border: i === imgActiva ? '1px solid #fff' : '1px solid #222',
                           opacity: i === imgActiva ? 1 : 0.5,
                           transition: 'all 0.2s',
+                          borderRadius: '2px',
+                          overflow: 'hidden'
                         }}
-                      />
+                      >
+                        <img
+                          src={getImagenUrl(img)}
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                            objectFit: 'contain',
+                          }}
+                        />
+                      </div>
                     ))}
                   </div>
                 )}
@@ -84,16 +106,6 @@ export default function TrabajoDetalle() {
             ) : (
               <div style={{ aspectRatio: '4/3', background: '#0d0d0d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#333', fontSize: '3rem' }}>
                 ◈
-              </div>
-            )}
-
-            {/* Viewer 3D */}
-            {trabajo.modelo3DPath && (
-              <div style={{ marginTop: '1.5rem' }}>
-                <p style={{ color: '#555', fontSize: '0.75rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-                  MODELO 3D — Rotá con el mouse
-                </p>
-                <Viewer3D url={`${BASE_URL}${trabajo.modelo3DPath}`} height="350px" />
               </div>
             )}
           </motion.div>

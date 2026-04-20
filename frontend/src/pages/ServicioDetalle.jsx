@@ -215,7 +215,15 @@ export default function ServicioDetalle() {
 
 function TrabajoCard({ trabajo, index }) {
   const [hovered, setHovered] = useState(false);
-  const imagen = trabajo.imagenes?.[0] ? `${BASE_URL}${trabajo.imagenes[0]}` : null;
+  
+  const getImagenUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith('http')) return path;
+    if (path.startsWith('/productos') || path.startsWith('/images')) return path;
+    return `${BASE_URL}${path}`;
+  };
+
+  const imagen = getImagenUrl(trabajo.imagenes?.[0]);
 
   return (
     <motion.div

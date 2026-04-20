@@ -28,8 +28,6 @@ public class Trabajo {
     @Column(name = "imagen_path")
     private List<String> imagenes = new ArrayList<>();
 
-    private String modelo3DPath;
-
     private Boolean destacado = false;
 
     private LocalDate fecha;

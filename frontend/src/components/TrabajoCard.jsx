@@ -5,9 +5,14 @@ import { API_BASE } from '../services/api';
 const BASE_URL = API_BASE;
 
 export default function TrabajoCard({ trabajo, index = 0 }) {
-    const imagen = trabajo.imagenes?.[0]
-        ? `${BASE_URL}${trabajo.imagenes[0]}`
-        : null;
+    const getImagenUrl = (path) => {
+        if (!path) return null;
+        if (path.startsWith('http')) return path;
+        if (path.startsWith('/productos') || path.startsWith('/images')) return path;
+        return `${BASE_URL}${path}`;
+    };
+
+    const imagen = getImagenUrl(trabajo.imagenes?.[0]);
 
     return (
         <motion.div
@@ -57,25 +62,6 @@ export default function TrabajoCard({ trabajo, index = 0 }) {
                                 }}
                             >
                                 ◈
-                            </div>
-                        )}
-
-                        {/* Badge 3D */}
-                        {trabajo.modelo3DPath && (
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: '0.75rem',
-                                    right: '0.75rem',
-                                    background: '#fff',
-                                    color: '#000',
-                                    fontSize: '0.65rem',
-                                    fontWeight: 700,
-                                    padding: '0.25rem 0.5rem',
-                                    letterSpacing: '0.1em',
-                                }}
-                            >
-                                3D
                             </div>
                         )}
                     </div>

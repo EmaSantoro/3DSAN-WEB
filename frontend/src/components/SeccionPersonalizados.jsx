@@ -1,7 +1,16 @@
 import { motion } from 'framer-motion';
 import Reveal from './Reveal';
 
+// Lista de imágenes para el carrete. 
+const CARRETE_IMAGES = [
+  'personalizados.png',
+  'personalizados2.png',
+  'personalizados3.png'
+].map(img => `/images/imagesCarrete/${img}`);
+
 export default function SeccionPersonalizados() {
+  // Duplicamos la lista para el efecto de scroll infinito sin saltos
+  const doubleImages = [...CARRETE_IMAGES, ...CARRETE_IMAGES];
 
   return (
     <section
@@ -17,62 +26,63 @@ export default function SeccionPersonalizados() {
           alignItems: 'center',
         }}
       >
-        {/* Imagen lado izquierdo */}
-        <div style={{ order: 0 }}>
+        {/* Carrete de Imágenes (Lado Izquierdo) */}
+        <div style={{ order: 0, overflow: 'hidden', position: 'relative', width: '100%' }}>
           <Reveal x={-40}>
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-              style={{
-                aspectRatio: '1/1',
-                background: '#080808',
-                border: '1px solid rgba(255,255,255,0.05)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-                position: 'relative',
-                boxShadow: '0 30px 60px rgba(0,0,0,0.5)'
-              }}
-            >
-              <img
-                src="/productos/personalizados.jpeg"
-                alt="Diseños personalizados 3DSAN"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'relative', zIndex: 1 }}
-                onError={(e) => { e.target.style.display = 'none'; }}
-              />
-              {/* Decoración geométrica de fondo */}
-              <div
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', background: 'transparent', display: 'flex', alignItems: 'center' }}>
+              
+              <motion.div
+                animate={{ x: [0, '-50%'] }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    duration: 25,
+                    ease: "linear",
+                  },
+                }}
                 style={{
-                  position: 'absolute',
-                  inset: 0,
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                  opacity: 0.3
+                  gap: '1.5rem',
+                  padding: '0 0.5rem',
+                  width: 'fit-content'
                 }}
               >
-                {[0, 1, 2].map((i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ rotate: [0, 90], scale: [1, 1.1, 1] }}
-                    transition={{ repeat: Infinity, duration: 10 + i * 2, ease: "linear" }}
+                {doubleImages.map((src, idx) => (
+                  <div
+                    key={idx}
                     style={{
-                      width: `${100 - i * 25}px`,
-                      height: `${100 - i * 25}px`,
-                      border: '1px solid var(--blue-light)',
-                      transform: `rotate(${i * 15}deg)`,
+                      flexShrink: 0,
+                      width: '280px',
+                      height: '380px',
+                      background: 'transparent',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
                     }}
-                  />
+                  >
+                    <img
+                      src={src}
+                      alt={`Diseño personalizado ${idx}`}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                      onError={(e) => { 
+                        // Placeholder si la imagen no existe aún
+                        e.target.style.display = 'none';
+                        e.target.parentNode.style.background = 'linear-gradient(45deg, #111, #222)';
+                      }}
+                    />
+                  </div>
                 ))}
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Degradados laterales para suavizar bordes - Sincronizados con el fondo del sitio */}
+              <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'linear-gradient(90deg, #111111 0%, transparent 25%, transparent 75%, #111111 100%)', zIndex: 2 }} />
+            </div>
           </Reveal>
         </div>
 
-        {/* Texto */}
+        {/* Texto (Lado Derecho) */}
         <div>
           <Reveal delay={0.1} x={40}>
             <p style={{ color: 'var(--blue-light)', letterSpacing: '0.4em', fontSize: '0.75rem', fontWeight: 600, marginBottom: '1.5rem', textTransform: 'uppercase' }}>

@@ -48,7 +48,6 @@ public class TrabajoService {
         dto.setDescripcion(t.getDescripcion());
         dto.setCategoria(t.getCategoria());
         dto.setImagenes(t.getImagenes());
-        dto.setModelo3DPath(t.getModelo3DPath());
         dto.setDestacado(t.getDestacado());
         dto.setFecha(t.getFecha());
         return dto;
